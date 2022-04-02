@@ -15,11 +15,10 @@ public class Tree {
         this.root = new Node(initialState);
     }
 
-    private static class Manhatten implements Comparator<Node> {
+    private static class Manhattan implements Comparator<Node> {
         @Override
-        public int compare(Node o1, Node o2)
-        {
-            return h(o1) - h(o2);
+        public int compare(Node o1, Node o2) {
+            return (o1.getCost() + h(o1)) - (o2.getCost() + h(o2));
         }
     }
 
@@ -27,18 +26,6 @@ public class Tree {
     public List<Node> expand(Node node) {
         int row = node.getMissingTileRow(), col = node.getMissingTileCol();
         List<Node> list = new ArrayList<>();
-        // Up Action
-        if (row != 0) {
-            Node upNode = node.createChild(row - 1, col);
-            upNode.setAction(Action.Up);
-            list.add(upNode);
-        }
-        // Down Action
-        if (row != 2) {
-            Node downNode = node.createChild(row + 1, col);
-            downNode.setAction(Action.Down);
-            list.add(downNode);
-        }
         // Left Action
         if (col != 0) {
             Node leftNode = node.createChild(row, col - 1);
@@ -51,102 +38,98 @@ public class Tree {
             rightNode.setAction(Action.Right);
             list.add(rightNode);
         }
+        // Up Action
+        if (row != 0) {
+            Node upNode = node.createChild(row - 1, col);
+            upNode.setAction(Action.Up);
+            list.add(upNode);
+        }
+        // Down Action
+        if (row != 2) {
+            Node downNode = node.createChild(row + 1, col);
+            downNode.setAction(Action.Down);
+            list.add(downNode);
+        }
         return list;
     }
-
-    public boolean breadthFirstSearch() {
+    public void breadthFirstSearch() {
         double startTime = System.currentTimeMillis();
         int size = 0;
         Queue<Node> frontier = new LinkedList<>();
-        Set<Node> reached = new HashSet<>();
-        Node node = root;
-        if (node.isGoal()) return true;
-        frontier.add(node);
+        Hashtable<Integer, Node> reached = new Hashtable<>();
+        frontier.add(root);
         while (!frontier.isEmpty()) {
-            node = frontier.poll();
-            reached.add(node);
+            Node node = frontier.poll();
+            reached.put(node.hashCode(), node);
             if (node.isGoal()) {
                 double endTime = System.currentTimeMillis();
                 ActionPath path = new ActionPath(root, node);
                 path.printPath();
                 System.out.println("Time: " + (endTime - startTime) + " millie seconds");
                 System.out.println("Space: " + size);
-                return true;
+                return;
             }
-            List<Node> expansion = expand(node);
-            for (Node i : expansion) {
-                boolean isFound = reached.contains(i) && frontier.contains(i);
-                if (!isFound) {
+            for (Node i : expand(node)) {
+                if ((!(frontier.contains(i))) && !(reached.containsKey(i.hashCode()))) {
                     frontier.add(i);
                     size += 1;
+//                    System.out.println(i);
                 }
             }
         }
-        return false;
     }
-
-    public boolean depthFirstSearch() {
+    public void depthFirstSearch() {
         double startTime = System.currentTimeMillis();
         int size = 0;
         Stack<Node> frontier = new Stack<>();
-        //HashMap<Integer, Node> reached = new HashMap<>();
-        Node node = root;
-        Set<Node> reached = new HashSet<>();
-        if (node.isGoal()) return true;
-        frontier.push(node);
+        Hashtable<Integer, Node> reached = new Hashtable<>();
+        frontier.push(root);
         while (!frontier.isEmpty()) {
-            node = frontier.pop();
-            reached.add(node);
+            Node node = frontier.pop();
+            reached.put(node.hashCode(), node);
             if (node.isGoal()) {
                 double endTime = System.currentTimeMillis();
                 ActionPath path = new ActionPath(root, node);
                 path.printPath();
                 System.out.println("Time: " + (endTime - startTime) + " millie seconds");
                 System.out.println("Space: " + size);
-                return true;
+                return;
             }
-            List<Node> expansion = expand(node);
-            for (Node i : expansion) {
-                boolean isFound = reached.contains(i);
-                if (!isFound) {
-                    if (!(frontier.contains(i))) {
-                        frontier.push(i);
-                        size += 1;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-    public boolean AStartManhatten() {
-        double startTime = System.currentTimeMillis();
-        int size = 0;
-        Queue<Node> frontier = new PriorityQueue<>(new Manhatten());
-        Set<Node> reached = new HashSet<>();
-        Node node = root;
-        if (node.isGoal()) return true;
-        frontier.add(node);
-        while (!frontier.isEmpty()) {
-            node = frontier.poll();
-            reached.add(node);
-            if (node.isGoal()) {
-                double endTime = System.currentTimeMillis();
-                ActionPath path = new ActionPath(root, node);
-                path.printPath();
-                System.out.println("Time: " + (endTime - startTime) + " millie seconds");
-                System.out.println("Space: " + size);
-                return true;
-            }
-            List<Node> expansion = expand(node);
-            for (Node i : expansion) {
-                boolean isFound = reached.contains(i) && frontier.contains(i);
-                if (!isFound) {
-                    frontier.add(i);
+            for (Node i : expand(node)) {
+                if ((!(frontier.contains(i))) && !(reached.containsKey(i.hashCode()))) {
+                    frontier.push(i);
+//                    System.out.println(i);
                     size += 1;
                 }
             }
         }
-        return false;
+    }
+
+    public void ASStartManhattan() {
+        double startTime = System.currentTimeMillis();
+        int size = 0;
+        PriorityQueue<Node> frontier = new PriorityQueue<>(new Manhattan());
+        Hashtable<Integer, Node> reached = new Hashtable<>();
+        frontier.add(root);
+        while (!frontier.isEmpty()) {
+            Node node = frontier.poll();
+            reached.put(node.hashCode(), node);
+            if (node.isGoal()) {
+                double endTime = System.currentTimeMillis();
+                ActionPath path = new ActionPath(root, node);
+                path.printPath();
+                System.out.println("Time: " + (endTime - startTime) + " millie seconds");
+                System.out.println("Space: " + size);
+                return;
+            }
+            for (Node i : expand(node)) {
+                if ((!(frontier.contains(i))) && !(reached.contains(i))) {
+                    frontier.add(i);
+//                    System.out.println(i);
+                    size += 1;
+                }
+            }
+        }
     }
 
     public static int h(Node n) {

@@ -22,18 +22,19 @@ public class ActionPath {
         return list;
     }
     public void printPath(){
-        int size = path.size();
-        while (path.size() > 0) {
             Node node = path.pop();
+            System.out.println("The root node");
+            System.out.print(node);
+        while (path.size() > 0) {
+            node = path.pop();
             System.out.println();
             System.out.println();
             System.out.println("Direction Moved: " + node.getAction());
             System.out.println("Depth: " + node.getDepth());
             System.out.println("Cost: " + node.getCost());
-            System.out.println("MaxCost: " + node.getMaxCost());
             System.out.println();
             System.out.println("Current Node: \n");
-            System.out.println(Arrays.deepToString(node.getState()).replace("], ", "]\n").replace("[[", "[").replace("]]", "]"));
+            System.out.println(node);
             System.out.println();
         }
     }

@@ -4,18 +4,18 @@ import java.util.*;
 
 public class Node {
     // Data fields
-    private int[][] state; // represents the state of the board in a matrix form
+    private final int[][] state; // represents the state of the board in a matrix form
     private Node parent;
-    private List<Node> children; // represents the children of the node as an adjacency list
+    private final List<Node> children; // represents the children of the node as an adjacency list
     /**
      * <pre>depth:int</pre> to keep track of the node's depth <br>
      * <pre>missingTileRow:int , missingTileCol: int</pre>
      * to know where empty tile is (represented by a zero in the matrix form)
      */
-    private int depth, missingTileRow, missingTileCol, cost, maxCost;
+    private int depth = 0, missingTileRow, missingTileCol, cost = 0;
     // indicates the action used to reach the current node state
     private Action action;
-    // For comparision in Breadth-First Search, Depth-First Search & A* (Manhatten distance)
+    // For comparison in Breadth-First Search, Depth-First Search & A* (Manhattan distance)
     String stringState;
 
     // Constructor
@@ -37,26 +37,24 @@ public class Node {
     }
 
     // Methods
-    public void addChild(Node child) {
+    public void addChild(Node child) { // helper function
         child.setParent(this);
         child.setDepth(this.getDepth() + 1);
-        child.setMaxCost(child.getCost());
+        child.setCost(this.getCost() + 1);
         this.children.add(child);
     }
 
     public Node createChild(int a, int b) {
         int[][] t = new int[3][3];
         for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                t[i][j] = state[i][j];
-            }
+            System.arraycopy(state[i], 0, t[i], 0, 3);
         }
         t[missingTileRow][missingTileCol] = t[a][b];
         // might be wrong but leave as is for now.
-        int cost = state[a][b];
+        // int cost = state[a][b];
         t[a][b] = 0;
         Node child = new Node(t);
-        child.setCost(cost);
+        child.setCost(1);
         addChild(child);
         return child;
     }
@@ -64,9 +62,8 @@ public class Node {
     @Override
     //Hashcode generated from String version of board
     public int hashCode() {
-        int result = 17;
-        result = 37 * result + this.getStringState().hashCode();
-        return result;
+        //int result = 17;
+        return this.stringState.hashCode();
     }
 
     public String createStringBoard() {
@@ -94,16 +91,8 @@ public class Node {
     }
 
     // Setters
-    public void setState(int[][] state) {
-        this.state = state;
-    }
-
     public void setParent(Node parent) {
         this.parent = parent;
-    }
-
-    public void setChildren(List<Node> children) {
-        this.children = children;
     }
 
     public void setAction(Action action) {
@@ -114,20 +103,8 @@ public class Node {
         this.depth = depth;
     }
 
-    public void setMissingTileCol(int missingTileCol) {
-        this.missingTileCol = missingTileCol;
-    }
-
-    public void setMissingTileRow(int missingTileRow) {
-        this.missingTileRow = missingTileRow;
-    }
-
     public void setCost(int cost) {
         this.cost = cost;
-    }
-
-    public void setMaxCost(int maxCost) {
-        this.maxCost = this.parent.getMaxCost() + maxCost;
     }
 
     // Getters
@@ -147,32 +124,27 @@ public class Node {
         return missingTileRow;
     }
 
-    public int[][] getState() {
-        return state;
-    }
-    public int getRow(int value){
-        for(int i = 0; i < 3;i++){
-            for(int j = 0; j < 3;j++){
-                if(state[i][j] == value){
+    public int getRow(int value) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (state[i][j] == value) {
                     return i;
                 }
             }
         }
-        return  -1;
+        return -1;
     }
-    public int getCol(int value){
-        for(int i = 0;i < 3;i++){
-            for(int j = 0;j < 3;j++){
-                if(state[i][j] == value)
+
+    public int getCol(int value) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (state[i][j] == value)
                     return j;
             }
         }
         return -1;
     }
 
-    public List<Node> getChildren() {
-        return children;
-    }
 
     public Node getParent() {
         return parent;
@@ -182,24 +154,21 @@ public class Node {
         return cost;
     }
 
-    public int getMaxCost() {
-        return maxCost;
-    }
-
     public String getStringState() {
         return stringState;
     }
-    /*@Override
-    public String toString(){
+
+    @Override
+    public String toString() {
         StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < 3;i++){
-            for(int j = 0; j < 3;j++){
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
                 sb.append(this.state[i][j]);
-                if(j != 2) sb.append("\t");
+                if (j != 2) sb.append("\t");
             }
             sb.append("\n");
         }
-        sb.append("Action taken : ");
+        sb.append("Depth : ").append(this.depth).append("\n");
         return sb.toString();
-    }*/
+    }
 }
