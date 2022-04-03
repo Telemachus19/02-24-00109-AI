@@ -15,9 +15,11 @@ public class Main {
         }
         Tree Board = new Tree(initialState);
         System.out.println("Choose the Algorithm");
+        System.out.println();
         System.out.println("1. BFS");
         System.out.println("2. DFS");
         System.out.println("3. A*");
+        System.out.println();
         System.out.print("Enter your choice: ");
         input1 = sc.nextInt();
 
@@ -25,8 +27,10 @@ public class Main {
             case 1, 2 -> System.out.println("Not yet implemented");
             default -> {
                 System.out.println("Choose the Heuristic function");
-                System.out.println("1. Manhattan");
-                System.out.println("2. Ecludian");
+                System.out.println();
+                System.out.println("1. Manhattan Distance");
+                System.out.println("2. Euclidean Distance");
+                System.out.println();
                 System.out.print("Enter your choice: ");
                 input2 = sc.nextInt();
                 if (input2 == 1)

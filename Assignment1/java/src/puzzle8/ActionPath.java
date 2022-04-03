@@ -30,15 +30,12 @@ public class ActionPath {
         System.out.print(node);
         while (path.size() > 0) {
             node = path.pop();
-            System.out.println();
-            System.out.println();
+            System.out.println("-----------------------");
+            System.out.println("Current Node: \n");
+            System.out.println(node);
             System.out.println("Direction Moved: " + node.getDirection());
             System.out.println("Depth: " + node.getDepth());
             System.out.println("Cost: " + node.getCost());
-            System.out.println();
-            System.out.println("Current Node: \n");
-            System.out.println(node);
-            System.out.println();
         }
     }
 }

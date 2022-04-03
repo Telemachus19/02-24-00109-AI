@@ -102,6 +102,7 @@ public class Tree {
                 double endTime = System.currentTimeMillis();
                 ActionPath path = new ActionPath(root, node);
                 path.printPath();
+                System.out.println("-----------------------");
                 System.out.println("Time: " + (endTime - startTime) + " millie seconds");
                 System.out.println("Space: " + size);
                 return;
