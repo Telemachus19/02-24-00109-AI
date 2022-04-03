@@ -1,79 +1,90 @@
 package puzzle8;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
+/*
+ * Our node for the board needs
+ * - a parent
+ * - a state (a description of this state as a string for the hash table)
+ * - children
+ * - position of missing tile
+ * - Action taken to reach this node
+ * */
 public class Node {
     // Data fields
-    private final int[][] state; // represents the state of the board in a matrix form
     private Node parent;
-    private final List<Node> children; // represents the children of the node as an adjacency list
-    /**
-     * <pre>depth:int</pre> to keep track of the node's depth <br>
-     * <pre>missingTileRow:int , missingTileCol: int</pre>
-     * to know where empty tile is (represented by a zero in the matrix form)
-     */
-    private int depth = 0, missingTileRow, missingTileCol, cost = 0;
-    // indicates the action used to reach the current node state
-    private Action action;
-    // For comparison in Breadth-First Search, Depth-First Search & A* (Manhattan distance)
-    String stringState;
+    private List<Node> children;
+    private int[][] state;
+    private String stringState;
+    private Action direction;
+    private int depth = 0, missingTileRow, missingTileCol, cost;
 
     // Constructor
     public Node(int[][] state) {
         this.state = state;
+        this.stringState = createStringBoard();
         this.parent = null;
+        this.direction = null;
         this.children = new ArrayList<>();
-        this.action = null;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (state[i][j] == 0) {
-                    this.missingTileRow = i;
-                    this.missingTileCol = j;
+                    missingTileRow = i;
+                    missingTileCol = j;
+                }
+            }
+        }
+    }
+
+    // Methods
+    public String createStringBoard() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++)
+                sb.append(this.state[i][j]);
+        }
+        return sb.toString();
+    }
+
+    // Add child function which will act as a helper function later
+    public void addChild(Node child) {
+        child.setParent(this);
+        child.setDepth(this.depth + 1);
+        child.setCost(this.cost + 1);
+        this.children.add(child);
+    }
+
+    /*
+     * Create a child which is the main way that we will use to actually add children with a state
+     * a,b represent new position of missing tile
+     * It returns a node which will be used later in expand fn
+     * */
+    public Node createChild(int a, int b) {
+        int[][] placeholder = new int[3][3];
+        // copying the state matrix into the placeholder and switching the missing tile
+        for (int i = 0; i < 3; i++)
+            System.arraycopy(this.state[i], 0, placeholder[i], 0, 3);
+        placeholder[missingTileRow][missingTileCol] = placeholder[a][b];
+        placeholder[a][b] = 0;
+        Node child = new Node(placeholder);
+        child.setCost(1);
+        this.addChild(child); // using the helper fn created earlier
+        return child;
+    }
+
+    public int[] getRowCol(int value) {
+        int[] container = new int[2];
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (state[i][j] == value) {
+                    container[0] = i;
+                    container[1] = j;
                     break;
                 }
             }
         }
-        this.stringState = createStringBoard();
-    }
-
-    // Methods
-    public void addChild(Node child) { // helper function
-        child.setParent(this);
-        child.setDepth(this.getDepth() + 1);
-        child.setCost(this.getCost() + 1);
-        this.children.add(child);
-    }
-
-    public Node createChild(int a, int b) {
-        int[][] t = new int[3][3];
-        for (int i = 0; i < 3; i++) {
-            System.arraycopy(state[i], 0, t[i], 0, 3);
-        }
-        t[missingTileRow][missingTileCol] = t[a][b];
-        // might be wrong but leave as is for now.
-        // int cost = state[a][b];
-        t[a][b] = 0;
-        Node child = new Node(t);
-        child.setCost(1);
-        addChild(child);
-        return child;
-    }
-
-    @Override
-    //Hashcode generated from String version of board
-    public int hashCode() {
-        //int result = 17;
-        return this.stringState.hashCode();
-    }
-
-    public String createStringBoard() {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                sb.append(state[i][j]);
-            }
-        }
-        return sb.toString();
+        return container;
     }
 
     @Override
@@ -90,13 +101,43 @@ public class Node {
         return this.equals(GoalState);
     }
 
+    @Override
+    public int hashCode() {
+        return this.stringState.hashCode();
+    }
+
+    // getters
+    public String getStringState() {
+        return stringState;
+    }
+
+    public int getMissingTileRow() {
+        return missingTileRow;
+    }
+
+    public int getMissingTileCol() {
+        return missingTileCol;
+    }
+
+    public int getCost() {
+        return cost;
+    }
+
+    public int getDepth() {
+        return depth;
+    }
+
+    public Node getParent() {
+        return parent;
+    }
+
+    public Action getDirection() {
+        return direction;
+    }
+
     // Setters
     public void setParent(Node parent) {
         this.parent = parent;
-    }
-
-    public void setAction(Action action) {
-        this.action = action;
     }
 
     public void setDepth(int depth) {
@@ -107,68 +148,22 @@ public class Node {
         this.cost = cost;
     }
 
-    // Getters
-    public Action getAction() {
-        return action;
+    public void setDirection(Action direction) {
+        this.direction = direction;
     }
 
-    public int getDepth() {
-        return depth;
-    }
-
-    public int getMissingTileCol() {
-        return missingTileCol;
-    }
-
-    public int getMissingTileRow() {
-        return missingTileRow;
-    }
-
-    public int getRow(int value) {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (state[i][j] == value) {
-                    return i;
-                }
-            }
-        }
-        return -1;
-    }
-
-    public int getCol(int value) {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (state[i][j] == value)
-                    return j;
-            }
-        }
-        return -1;
-    }
-
-
-    public Node getParent() {
-        return parent;
-    }
-
-    public int getCost() {
-        return cost;
-    }
-
-    public String getStringState() {
-        return stringState;
-    }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                sb.append(this.state[i][j]);
-                if (j != 2) sb.append("\t");
+                sb.append(state[i][j]).append('\t');
             }
             sb.append("\n");
         }
-        sb.append("Depth : ").append(this.depth).append("\n");
         return sb.toString();
     }
+
+
 }
