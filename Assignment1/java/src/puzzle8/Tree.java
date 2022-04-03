@@ -44,50 +44,75 @@ public class Tree {
         double startTime = System.currentTimeMillis();
         int size = 0;
         Stack<Node> frontier = new Stack<>();
-        Hashtable<Integer, Node> reached = new Hashtable<>();
-        frontier.push(root);
-        while (!frontier.isEmpty()) {
+        HashMap<Integer, Node> reached = new HashMap<>();
+        if (root.isGoal()) {
+            double endTime = System.currentTimeMillis();
+            ActionPath path = new ActionPath(root, root);
+            path.printPath();
+            System.out.println("-----------------------");
+            System.out.println("Time: " + (endTime - startTime) + " millie seconds");
+            System.out.println("Space: " + size);
+            return;
+        }
+        frontier.add(root);
+        size++;
+        reached.put(root.hashCode(), root);
+        while (!(frontier.isEmpty())) {
             Node node = frontier.pop();
-            reached.put(node.hashCode(), node);
-            if (node.isGoal()) {
-                double endTime = System.currentTimeMillis();
-                ActionPath path = new ActionPath(root, node);
-                path.printPath();
-                System.out.println("-----------------------");
-                System.out.println("Time: " + (endTime - startTime) + " millie seconds");
-                System.out.println("Space: " + size);
-                return;
-            }
-            for (Node i : expand(node)) {
-                if ((!(frontier.contains(i))) && !(reached.containsKey(i.hashCode()))) {
-                    frontier.push(i);
+            for (Node child : expand(node)) {
+                if (child.isGoal()) {
+                    double endTime = System.currentTimeMillis();
+                    size += 1;
+                    ActionPath path = new ActionPath(root, child);
+                    path.printPath();
+                    System.out.println("-----------------------");
+                    System.out.println("Time: " + (endTime - startTime) + " millie seconds");
+                    System.out.println("Space: " + size);
+                    return;
+                }
+                if (!(reached.containsKey(child.hashCode())) && !(frontier.contains(child))) {
+                    frontier.push(child);
+                    reached.put(child.hashCode(), child);
                     size += 1;
                 }
             }
         }
     }
-
+    
     public void breadthFirstSearch() {
         double startTime = System.currentTimeMillis();
         int size = 0;
         Queue<Node> frontier = new LinkedList<>();
-        Hashtable<Integer, Node> reached = new Hashtable<>();
+        HashMap<Integer, Node> reached = new HashMap<>();
+        if (root.isGoal()) {
+            size++;
+            double endTime = System.currentTimeMillis();
+            ActionPath path = new ActionPath(root, root);
+            path.printPath();
+            System.out.println("-----------------------");
+            System.out.println("Time: " + (endTime - startTime) + " millie seconds");
+            System.out.println("Space: " + size);
+            return;
+        }
         frontier.add(root);
-        while (!frontier.isEmpty()) {
+        size++;
+        reached.put(root.hashCode(), root);
+        while (!(frontier.isEmpty())) {
             Node node = frontier.poll();
-            reached.put(node.hashCode(), node);
-            if (node.isGoal()) {
-                double endTime = System.currentTimeMillis();
-                ActionPath path = new ActionPath(root, node);
-                path.printPath();
-                System.out.println("-----------------------");
-                System.out.println("Time: " + (endTime - startTime) + " millie seconds");
-                System.out.println("Space: " + size);
-                return;
-            }
-            for (Node i : expand(node)) {
-                if ((!(frontier.contains(i))) && !(reached.containsKey(i.hashCode()))) {
-                    frontier.add(i);
+            for (Node child : expand(node)) {
+                if (child.isGoal()) {
+                    double endTime = System.currentTimeMillis();
+                    size += 1;
+                    ActionPath path = new ActionPath(root, child);
+                    path.printPath();
+                    System.out.println("-----------------------");
+                    System.out.println("Time: " + (endTime - startTime) + " millie seconds");
+                    System.out.println("Space: " + size);
+                    return;
+                }
+                if (!(reached.containsKey(child.hashCode())) && !(frontier.contains(child))) {
+                    frontier.add(child);
+                    reached.put(child.hashCode(), child);
                     size += 1;
                 }
             }
@@ -143,23 +168,36 @@ public class Tree {
             frontier = new PriorityQueue<>(new f_2());
         }
         int size = 0;
-        HashMap<Integer, Node> explored = new HashMap<>();
+        HashMap<Integer, Node> reached = new HashMap<>();
+        if (root.isGoal()) {
+            size++;
+            double endTime = System.currentTimeMillis();
+            ActionPath path = new ActionPath(root, root);
+            path.printPath();
+            System.out.println("-----------------------");
+            System.out.println("Time: " + (endTime - startTime) + " millie seconds");
+            System.out.println("Space: " + size);
+            return;
+        }
         frontier.add(root);
-        while (!frontier.isEmpty()) {
+        size++;
+        reached.put(root.hashCode(), root);
+        while (!(frontier.isEmpty())) {
             Node node = frontier.poll();
-            explored.put(node.hashCode(), node);
-            if (node.isGoal()) {
-                double endTime = System.currentTimeMillis();
-                ActionPath path = new ActionPath(root, node);
-                path.printPath();
-                System.out.println("-----------------------");
-                System.out.println("Time: " + (endTime - startTime) + " millie seconds");
-                System.out.println("Space: " + size);
-                return;
-            }
-            for (Node n : expand(node)) {
-                if (!(frontier.contains(n)) && !(explored.containsKey(n.hashCode()))) {
-                    frontier.add(n);
+            for (Node child : expand(node)) {
+                if (child.isGoal()) {
+                    double endTime = System.currentTimeMillis();
+                    size += 1;
+                    ActionPath path = new ActionPath(root, child);
+                    path.printPath();
+                    System.out.println("-----------------------");
+                    System.out.println("Time: " + (endTime - startTime) + " millie seconds");
+                    System.out.println("Space: " + size);
+                    return;
+                }
+                if (!(reached.containsKey(child.hashCode())) && !(frontier.contains(child))) {
+                    frontier.add(child);
+                    reached.put(child.hashCode(), child);
                     size += 1;
                 }
             }
