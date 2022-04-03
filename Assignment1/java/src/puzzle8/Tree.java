@@ -78,7 +78,7 @@ public class Tree {
             }
         }
     }
-    
+
     public void breadthFirstSearch() {
         double startTime = System.currentTimeMillis();
         int size = 0;

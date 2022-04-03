@@ -32,6 +32,7 @@ public class Node {
                 if (state[i][j] == 0) {
                     missingTileRow = i;
                     missingTileCol = j;
+                    break;
                 }
             }
         }
