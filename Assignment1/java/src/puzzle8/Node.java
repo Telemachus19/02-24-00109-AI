@@ -38,6 +38,7 @@ public class Node {
     }
 
     // Methods
+    /*بتحول ال matrix ل string عشان المقرنة بعدين*/
     public String createStringBoard() {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < 3; i++) {
@@ -48,6 +49,7 @@ public class Node {
     }
 
     // Add child function which will act as a helper function later
+    /*داله مساعدة عشان لما نيجي تعمل ال child ل ال node*/
     public void addChild(Node child) {
         child.setParent(this);
         child.setDepth(this.depth + 1);
@@ -60,6 +62,9 @@ public class Node {
      * a,b represent new position of missing tile
      * It returns a node which will be used later in expand fn
      * */
+    /*
+    * ال a و ال b مكان الصفرة الجديدة
+    * بترجع node عشان نقدر نستعملها في ال expand */
     public Node createChild(int a, int b) {
         int[][] placeholder = new int[3][3];
         // copying the state matrix into the placeholder and switching the missing tile
@@ -73,6 +78,10 @@ public class Node {
         return child;
     }
 
+    /*بترجع لنا مكان قيمة معينه في ال matrix
+    * المكان بيرجع علي هيئة array
+    * 0 -> س
+    * 1 -> ص*/
     public int[] getRowCol(int value) {
         int[] container = new int[2];
         for (int i = 0; i < 3; i++) {
@@ -101,6 +110,7 @@ public class Node {
         return this.equals(GoalState);
     }
 
+    /*بيحول ال String ل كود عشان لما تنجي نعمل جدول تحتفظة فيه بال node اللي شوفناها قبل كدة*/
     @Override
     public int hashCode() {
         return this.stringState.hashCode();
