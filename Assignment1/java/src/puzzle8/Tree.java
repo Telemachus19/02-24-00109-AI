@@ -41,6 +41,45 @@ public class Tree {
     }
 
     // TODO: Implement DepthFirstSearch - Abdelrahman
+
+    public void depthFirstSearch() {
+        double startTime = System.currentTimeMillis();
+        int size = 0;
+        Stack<Node> frontier = new Stack<>();
+        HashMap<Integer, Node> reached = new HashMap<>();
+        if (root.isGoal()) {
+            double endTime = System.currentTimeMillis();
+            ActionPath path = new ActionPath(root, root);
+            path.printPath();
+            System.out.println("-----------------------");
+            System.out.println("Time: " + (endTime - startTime) + " millie seconds");
+            System.out.println("Space: " + size);
+            return;
+        }
+        frontier.add(root);
+        size++;
+        reached.put(root.hashCode(), root);
+        while (!(frontier.isEmpty())) {
+            Node node = frontier.pop();
+            for (Node child : expand(node)) {
+                if (child.isGoal()) {
+                    double endTime = System.currentTimeMillis();
+                    size += 1;
+                    ActionPath path = new ActionPath(root, child);
+                    path.printPath();
+                    System.out.println("-----------------------");
+                    System.out.println("Time: " + (endTime - startTime) + " millie seconds");
+                    System.out.println("Space: " + size);
+                    return;
+                }
+                if (!(reached.containsKey(child.hashCode())) && !(frontier.contains(child))) {
+                    frontier.push(child);
+                    reached.put(child.hashCode(), child);
+                    size += 1;
+                }
+            }
+        }
+    }
     // TODO: Implement BreadthFirst Search - Tony
 
     // TODO: Implement A* search - Manhattan heuristic, euclidean distance-
