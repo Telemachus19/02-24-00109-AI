@@ -1,0 +1,242 @@
+Welcome to 8 puzzle Solver
+Enter the puzzle : 1 2 3 4 5 6 7 8 0
+Choose the Algorithm
+
+1. BFS
+2. DFS
+3. A*
+
+Enter your choice: 3
+Choose the Heuristic function
+
+1. Manhattan Distance
+2. Euclidean Distance
+
+Enter your choice: 2
+The root node
+1	2	3	
+4	5	6	
+7	8	0	
+-----------------------
+Current Node: 
+
+1	2	3	
+4	5	6	
+7	0	8	
+
+Direction Moved: Left
+Depth: 1
+Cost: 1
+-----------------------
+Current Node: 
+
+1	2	3	
+4	0	6	
+7	5	8	
+
+Direction Moved: Up
+Depth: 2
+Cost: 2
+-----------------------
+Current Node: 
+
+1	2	3	
+4	6	0	
+7	5	8	
+
+Direction Moved: Right
+Depth: 3
+Cost: 3
+-----------------------
+Current Node: 
+
+1	2	0	
+4	6	3	
+7	5	8	
+
+Direction Moved: Up
+Depth: 4
+Cost: 4
+-----------------------
+Current Node: 
+
+1	0	2	
+4	6	3	
+7	5	8	
+
+Direction Moved: Left
+Depth: 5
+Cost: 5
+-----------------------
+Current Node: 
+
+0	1	2	
+4	6	3	
+7	5	8	
+
+Direction Moved: Left
+Depth: 6
+Cost: 6
+-----------------------
+Current Node: 
+
+4	1	2	
+0	6	3	
+7	5	8	
+
+Direction Moved: Down
+Depth: 7
+Cost: 7
+-----------------------
+Current Node: 
+
+4	1	2	
+6	0	3	
+7	5	8	
+
+Direction Moved: Right
+Depth: 8
+Cost: 8
+-----------------------
+Current Node: 
+
+4	1	2	
+6	3	0	
+7	5	8	
+
+Direction Moved: Right
+Depth: 9
+Cost: 9
+-----------------------
+Current Node: 
+
+4	1	0	
+6	3	2	
+7	5	8	
+
+Direction Moved: Up
+Depth: 10
+Cost: 10
+-----------------------
+Current Node: 
+
+4	0	1	
+6	3	2	
+7	5	8	
+
+Direction Moved: Left
+Depth: 11
+Cost: 11
+-----------------------
+Current Node: 
+
+4	3	1	
+6	0	2	
+7	5	8	
+
+Direction Moved: Down
+Depth: 12
+Cost: 12
+-----------------------
+Current Node: 
+
+4	3	1	
+6	5	2	
+7	0	8	
+
+Direction Moved: Down
+Depth: 13
+Cost: 13
+-----------------------
+Current Node: 
+
+4	3	1	
+6	5	2	
+0	7	8	
+
+Direction Moved: Left
+Depth: 14
+Cost: 14
+-----------------------
+Current Node: 
+
+4	3	1	
+0	5	2	
+6	7	8	
+
+Direction Moved: Up
+Depth: 15
+Cost: 15
+-----------------------
+Current Node: 
+
+0	3	1	
+4	5	2	
+6	7	8	
+
+Direction Moved: Up
+Depth: 16
+Cost: 16
+-----------------------
+Current Node: 
+
+3	0	1	
+4	5	2	
+6	7	8	
+
+Direction Moved: Right
+Depth: 17
+Cost: 17
+-----------------------
+Current Node: 
+
+3	1	0	
+4	5	2	
+6	7	8	
+
+Direction Moved: Right
+Depth: 18
+Cost: 18
+-----------------------
+Current Node: 
+
+3	1	2	
+4	5	0	
+6	7	8	
+
+Direction Moved: Down
+Depth: 19
+Cost: 19
+-----------------------
+Current Node: 
+
+3	1	2	
+4	0	5	
+6	7	8	
+
+Direction Moved: Left
+Depth: 20
+Cost: 20
+-----------------------
+Current Node: 
+
+3	1	2	
+0	4	5	
+6	7	8	
+
+Direction Moved: Left
+Depth: 21
+Cost: 21
+-----------------------
+Current Node: 
+
+0	1	2	
+3	4	5	
+6	7	8	
+
+Direction Moved: Up
+Depth: 22
+Cost: 22
+-----------------------
+Time: 97.0 millie seconds
+Space: 5827
