@@ -13,10 +13,28 @@ public class Main {
         int input1, input2;
         System.out.println("Welcome to 8 puzzle Solver");
         System.out.print("Enter the puzzle : ");
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++)
-                initialState[i][j] = sc.nextInt();
-        }
+        boolean inputCorrect = false;
+        do {
+            int[] freq = new int[9];
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    initialState[i][j] = sc.nextInt();
+                    if (initialState[i][j] > 8)
+                        break;
+                    freq[initialState[i][j]]++;
+                }
+            }
+            sc.nextLine();
+            for (int i = 0; i < 9; i++) {
+                if (freq[i] != 1) {
+                    inputCorrect = false;
+                    System.out.println("The input you have entered is incorrect. Please try again!");
+                    System.out.print("Enter the puzzle : ");
+                    break;
+                }
+                inputCorrect = true;
+            }
+        } while (!inputCorrect);
         Tree Board = new Tree(initialState);
         System.out.println("Choose the Algorithm");
         System.out.println();
