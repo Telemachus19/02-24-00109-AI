@@ -78,7 +78,6 @@ public class Tree {
                 }
             }
         }
-
         System.out.println("Time: " + (System.currentTimeMillis() - startTime) + " millie seconds");
         System.out.println("Space: " + size);
         return false;

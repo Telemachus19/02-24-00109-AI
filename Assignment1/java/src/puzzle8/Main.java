@@ -36,15 +36,24 @@ public class Main {
             }
         } while (!inputCorrect);
         Tree Board = new Tree(initialState);
-        System.out.println("Choose the Algorithm");
-        System.out.println();
-        System.out.println("1. BFS");
-        System.out.println("2. DFS");
-        System.out.println("3. A*");
-        System.out.println();
-        System.out.print("Enter your choice: ");
-        input1 = sc.nextInt();
+        inputCorrect = false;
+        do {
+            System.out.println("Choose the Algorithm");
+            System.out.println();
+            System.out.println("1. BFS");
+            System.out.println("2. DFS");
+            System.out.println("3. A*");
+            System.out.println();
+            System.out.print("Enter your choice: ");
+            input1 = sc.nextInt();
+            if (input1 == 1 || input1 == 2 || input1 == 3) {
+                inputCorrect = true;
+            } else {
+                System.out.println("Incorrect Choice. Please Try again!");
+            }
+        } while (!inputCorrect);
 
+        inputCorrect = false;
         switch (input1) {
             case 1 -> {
                 if (!(Board.breadthFirstSearch())) failure();
@@ -53,13 +62,21 @@ public class Main {
                 if (!Board.depthFirstSearch()) failure();
             }
             default -> {
-                System.out.println("Choose the Heuristic function");
-                System.out.println();
-                System.out.println("1. Manhattan Distance");
-                System.out.println("2. Euclidean Distance");
-                System.out.println();
-                System.out.print("Enter your choice: ");
-                input2 = sc.nextInt();
+                do {
+                    System.out.println("Choose the Heuristic function");
+                    System.out.println();
+                    System.out.println("1. Manhattan Distance");
+                    System.out.println("2. Euclidean Distance");
+                    System.out.println();
+                    System.out.print("Enter your choice: ");
+                    input2 = sc.nextInt();
+                    if (input2 == 1 || input2 == 2) {
+                        inputCorrect = true;
+                    } else {
+                        System.out.println("Incorrect Choice. Please Try again!");
+                    }
+                } while (!inputCorrect);
+
                 if (input2 == 1) {
                     if (!Board.aStar(1)) failure();
                 } else {
