@@ -40,7 +40,8 @@ public class Tree {
         return list;
     }
 
-    public void depthFirstSearch() {
+
+    public boolean depthFirstSearch() {
         double startTime = System.currentTimeMillis();
         int size = 0;
         Stack<Node> frontier = new Stack<>();
@@ -52,7 +53,7 @@ public class Tree {
             System.out.println("-----------------------");
             System.out.println("Time: " + (endTime - startTime) + " millie seconds");
             System.out.println("Space: " + size);
-            return;
+            return true;
         }
         frontier.add(root);
         size++;
@@ -68,7 +69,7 @@ public class Tree {
                     System.out.println("-----------------------");
                     System.out.println("Time: " + (endTime - startTime) + " millie seconds");
                     System.out.println("Space: " + size);
-                    return;
+                    return true;
                 }
                 if (!(reached.containsKey(child.hashCode())) && !(frontier.contains(child))) {
                     frontier.push(child);
@@ -77,9 +78,13 @@ public class Tree {
                 }
             }
         }
+
+        System.out.println("Time: " + (System.currentTimeMillis() - startTime) + " millie seconds");
+        System.out.println("Space: " + size);
+        return false;
     }
 
-    public void breadthFirstSearch() {
+    public boolean breadthFirstSearch() {
         double startTime = System.currentTimeMillis();
         int size = 0;
         Queue<Node> frontier = new LinkedList<>();
@@ -92,7 +97,7 @@ public class Tree {
             System.out.println("-----------------------");
             System.out.println("Time: " + (endTime - startTime) + " millie seconds");
             System.out.println("Space: " + size);
-            return;
+            return true;
         }
         frontier.add(root);
         size++;
@@ -108,7 +113,7 @@ public class Tree {
                     System.out.println("-----------------------");
                     System.out.println("Time: " + (endTime - startTime) + " millie seconds");
                     System.out.println("Space: " + size);
-                    return;
+                    return true;
                 }
                 if (!(reached.containsKey(child.hashCode())) && !(frontier.contains(child))) {
                     frontier.add(child);
@@ -117,6 +122,9 @@ public class Tree {
                 }
             }
         }
+        System.out.println("Time: " + (System.currentTimeMillis() - startTime) + " millie seconds");
+        System.out.println("Space: " + size);
+        return false;
     }
 
     private int manhattanDistance(Node n) {
@@ -159,7 +167,7 @@ public class Tree {
         }
     }
 
-    public void aStar(int i) {
+    public boolean aStar(int i) {
         double startTime = System.currentTimeMillis();
         PriorityQueue<Node> frontier;
         if (i == 1) {
@@ -177,7 +185,7 @@ public class Tree {
             System.out.println("-----------------------");
             System.out.println("Time: " + (endTime - startTime) + " millie seconds");
             System.out.println("Space: " + size);
-            return;
+            return true;
         }
         frontier.add(root);
         size++;
@@ -193,7 +201,7 @@ public class Tree {
                     System.out.println("-----------------------");
                     System.out.println("Time: " + (endTime - startTime) + " millie seconds");
                     System.out.println("Space: " + size);
-                    return;
+                    return true;
                 }
                 if (!(reached.containsKey(child.hashCode())) && !(frontier.contains(child))) {
                     frontier.add(child);
@@ -202,5 +210,8 @@ public class Tree {
                 }
             }
         }
+        System.out.println("Time: " + (System.currentTimeMillis() - startTime) + " millie seconds");
+        System.out.println("Space: " + size);
+        return false;
     }
 }
