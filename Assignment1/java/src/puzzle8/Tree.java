@@ -40,9 +40,8 @@ public class Tree {
         return list;
     }
 
-    // TODO: Implement DepthFirstSearch - Abdelrahman
 
-    public void depthFirstSearch() {
+    public boolean depthFirstSearch() {
         double startTime = System.currentTimeMillis();
         int size = 0;
         Stack<Node> frontier = new Stack<>();
@@ -54,7 +53,7 @@ public class Tree {
             System.out.println("-----------------------");
             System.out.println("Time: " + (endTime - startTime) + " millie seconds");
             System.out.println("Space: " + size);
-            return;
+            return true;
         }
         frontier.add(root);
         size++;
@@ -70,7 +69,7 @@ public class Tree {
                     System.out.println("-----------------------");
                     System.out.println("Time: " + (endTime - startTime) + " millie seconds");
                     System.out.println("Space: " + size);
-                    return;
+                    return true;
                 }
                 if (!(reached.containsKey(child.hashCode())) && !(frontier.contains(child))) {
                     frontier.push(child);
@@ -79,10 +78,55 @@ public class Tree {
                 }
             }
         }
-    }
-    // TODO: Implement BreadthFirst Search - Tony
 
-    // TODO: Implement A* search - Manhattan heuristic, euclidean distance-
+        System.out.println("Time: " + (System.currentTimeMillis() - startTime) + " millie seconds");
+        System.out.println("Space: " + size);
+        return false;
+    }
+
+    public boolean breadthFirstSearch() {
+        double startTime = System.currentTimeMillis();
+        int size = 0;
+        Queue<Node> frontier = new LinkedList<>();
+        HashMap<Integer, Node> reached = new HashMap<>();
+        if (root.isGoal()) {
+            size++;
+            double endTime = System.currentTimeMillis();
+            ActionPath path = new ActionPath(root, root);
+            path.printPath();
+            System.out.println("-----------------------");
+            System.out.println("Time: " + (endTime - startTime) + " millie seconds");
+            System.out.println("Space: " + size);
+            return true;
+        }
+        frontier.add(root);
+        size++;
+        reached.put(root.hashCode(), root);
+        while (!(frontier.isEmpty())) {
+            Node node = frontier.poll();
+            for (Node child : expand(node)) {
+                if (child.isGoal()) {
+                    double endTime = System.currentTimeMillis();
+                    size += 1;
+                    ActionPath path = new ActionPath(root, child);
+                    path.printPath();
+                    System.out.println("-----------------------");
+                    System.out.println("Time: " + (endTime - startTime) + " millie seconds");
+                    System.out.println("Space: " + size);
+                    return true;
+                }
+                if (!(reached.containsKey(child.hashCode())) && !(frontier.contains(child))) {
+                    frontier.add(child);
+                    reached.put(child.hashCode(), child);
+                    size += 1;
+                }
+            }
+        }
+        System.out.println("Time: " + (System.currentTimeMillis() - startTime) + " millie seconds");
+        System.out.println("Space: " + size);
+        return false;
+    }
+
     private int manhattanDistance(Node n) {
         int[][] goalState = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}};
         int h = 0;
@@ -123,7 +167,7 @@ public class Tree {
         }
     }
 
-    public void aStar(int i) {
+    public boolean aStar(int i) {
         double startTime = System.currentTimeMillis();
         PriorityQueue<Node> frontier;
         if (i == 1) {
@@ -132,26 +176,42 @@ public class Tree {
             frontier = new PriorityQueue<>(new f_2());
         }
         int size = 0;
-        HashMap<Integer, Node> explored = new HashMap<>();
+        HashMap<Integer, Node> reached = new HashMap<>();
+        if (root.isGoal()) {
+            size++;
+            double endTime = System.currentTimeMillis();
+            ActionPath path = new ActionPath(root, root);
+            path.printPath();
+            System.out.println("-----------------------");
+            System.out.println("Time: " + (endTime - startTime) + " millie seconds");
+            System.out.println("Space: " + size);
+            return true;
+        }
         frontier.add(root);
-        while (!frontier.isEmpty()) {
+        size++;
+        reached.put(root.hashCode(), root);
+        while (!(frontier.isEmpty())) {
             Node node = frontier.poll();
-            explored.put(node.hashCode(), node);
-            if (node.isGoal()) {
-                double endTime = System.currentTimeMillis();
-                ActionPath path = new ActionPath(root, node);
-                path.printPath();
-                System.out.println("-----------------------");
-                System.out.println("Time: " + (endTime - startTime) + " millie seconds");
-                System.out.println("Space: " + size);
-                return;
-            }
-            for (Node n : expand(node)) {
-                if (!(frontier.contains(n)) && !(explored.containsKey(n.hashCode()))) {
-                    frontier.add(n);
+            for (Node child : expand(node)) {
+                if (child.isGoal()) {
+                    double endTime = System.currentTimeMillis();
+                    size += 1;
+                    ActionPath path = new ActionPath(root, child);
+                    path.printPath();
+                    System.out.println("-----------------------");
+                    System.out.println("Time: " + (endTime - startTime) + " millie seconds");
+                    System.out.println("Space: " + size);
+                    return true;
+                }
+                if (!(reached.containsKey(child.hashCode())) && !(frontier.contains(child))) {
+                    frontier.add(child);
+                    reached.put(child.hashCode(), child);
                     size += 1;
                 }
             }
         }
+        System.out.println("Time: " + (System.currentTimeMillis() - startTime) + " millie seconds");
+        System.out.println("Space: " + size);
+        return false;
     }
 }
