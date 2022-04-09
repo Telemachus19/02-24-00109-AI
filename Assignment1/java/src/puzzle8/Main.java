@@ -40,13 +40,15 @@ public class Main {
         do {
             System.out.println("Choose the Algorithm");
             System.out.println();
-            System.out.println("1. BFS");
-            System.out.println("2. DFS");
-            System.out.println("3. A*");
+            System.out.println("1. Breadth First Search");
+            System.out.println("2. Depth   First Search");
+            System.out.println("3. Uniform Cost  Search");
+            System.out.println("4. Best    First Search");
+            System.out.println("5. A*");
             System.out.println();
             System.out.print("Enter your choice: ");
             input1 = sc.nextInt();
-            if (input1 == 1 || input1 == 2 || input1 == 3) {
+            if (input1 == 1 || input1 == 2 || input1 == 3 || input1 == 4 || input1 == 5) {
                 inputCorrect = true;
             } else {
                 System.out.println("Incorrect Choice. Please Try again!");
@@ -61,27 +63,44 @@ public class Main {
             case 2 -> {
                 if (!Board.depthFirstSearch()) failure();
             }
+            case 3 -> {
+                if (!Board.uniformCostSearch()) failure();
+            }
+            case 4 -> {
+                do {
+                    System.out.println("Choose the Heuristic function");
+                    System.out.println();
+                    System.out.println("1. Manhattan Distance");
+                    System.out.println("2. Euclidean Distance");
+                    System.out.println("3. Misplaced Tiles");
+                    System.out.println();
+                    System.out.print("Enter your choice: ");
+                    input2 = sc.nextInt();
+                    if (input2 == 1 || input2 == 2 || input2 == 3) {
+                        inputCorrect = true;
+                    } else {
+                        System.out.println("Incorrect Choice. Please Try again!");
+                    }
+                } while (!inputCorrect);
+                if (!Board.bestFirstSearch(input2)) failure();
+            }
             default -> {
                 do {
                     System.out.println("Choose the Heuristic function");
                     System.out.println();
                     System.out.println("1. Manhattan Distance");
                     System.out.println("2. Euclidean Distance");
+                    System.out.println("3. Misplaced Tiles");
                     System.out.println();
                     System.out.print("Enter your choice: ");
                     input2 = sc.nextInt();
-                    if (input2 == 1 || input2 == 2) {
+                    if (input2 == 1 || input2 == 2 || input2 == 3) {
                         inputCorrect = true;
                     } else {
                         System.out.println("Incorrect Choice. Please Try again!");
                     }
                 } while (!inputCorrect);
-
-                if (input2 == 1) {
-                    if (!Board.aStar(1)) failure();
-                } else {
-                    if (!(Board.aStar(2))) failure();
-                }
+                if (!Board.aStar(input2)) failure();
             }
         }
     }
