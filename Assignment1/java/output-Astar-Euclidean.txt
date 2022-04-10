@@ -1,0 +1,267 @@
+Welcome to 8 puzzle Solver
+Enter the puzzle : 1 2 3 4 5 6 7 8 0
+Choose the Algorithm
+
+1. Breadth First Search
+2. Depth First Search
+3. Uniform Cost  Search
+4. Best First Search
+5. A*
+
+Enter your choice: 5
+Choose the Heuristic function
+
+1. Manhattan Distance
+2. Euclidean Distance
+3. Misplaced Tiles
+
+Enter your choice: 2
+The root node
+1	2	3	
+4	5	6	
+7	8	0	
+-----------------------
+Current Node: 
+
+1	2	3	
+4	5	6	
+7	0	8	
+
+Direction Moved: Left
+Depth          : 1
+Primary   Cost : 1
+Secondary Cost : 8
+-----------------------
+Current Node: 
+
+1	2	3	
+4	0	6	
+7	5	8	
+
+Direction Moved: Up
+Depth          : 2
+Primary   Cost : 2
+Secondary Cost : 13
+-----------------------
+Current Node: 
+
+1	2	3	
+4	6	0	
+7	5	8	
+
+Direction Moved: Right
+Depth          : 3
+Primary   Cost : 3
+Secondary Cost : 19
+-----------------------
+Current Node: 
+
+1	2	0	
+4	6	3	
+7	5	8	
+
+Direction Moved: Up
+Depth          : 4
+Primary   Cost : 4
+Secondary Cost : 22
+-----------------------
+Current Node: 
+
+1	0	2	
+4	6	3	
+7	5	8	
+
+Direction Moved: Left
+Depth          : 5
+Primary   Cost : 5
+Secondary Cost : 24
+-----------------------
+Current Node: 
+
+0	1	2	
+4	6	3	
+7	5	8	
+
+Direction Moved: Left
+Depth          : 6
+Primary   Cost : 6
+Secondary Cost : 25
+-----------------------
+Current Node: 
+
+4	1	2	
+0	6	3	
+7	5	8	
+
+Direction Moved: Down
+Depth          : 7
+Primary   Cost : 7
+Secondary Cost : 29
+-----------------------
+Current Node: 
+
+4	1	2	
+6	0	3	
+7	5	8	
+
+Direction Moved: Right
+Depth          : 8
+Primary   Cost : 8
+Secondary Cost : 35
+-----------------------
+Current Node: 
+
+4	1	2	
+6	3	0	
+7	5	8	
+
+Direction Moved: Right
+Depth          : 9
+Primary   Cost : 9
+Secondary Cost : 38
+-----------------------
+Current Node: 
+
+4	1	0	
+6	3	2	
+7	5	8	
+
+Direction Moved: Up
+Depth          : 10
+Primary   Cost : 10
+Secondary Cost : 40
+-----------------------
+Current Node: 
+
+4	0	1	
+6	3	2	
+7	5	8	
+
+Direction Moved: Left
+Depth          : 11
+Primary   Cost : 11
+Secondary Cost : 41
+-----------------------
+Current Node: 
+
+4	3	1	
+6	0	2	
+7	5	8	
+
+Direction Moved: Down
+Depth          : 12
+Primary   Cost : 12
+Secondary Cost : 44
+-----------------------
+Current Node: 
+
+4	3	1	
+6	5	2	
+7	0	8	
+
+Direction Moved: Down
+Depth          : 13
+Primary   Cost : 13
+Secondary Cost : 49
+-----------------------
+Current Node: 
+
+4	3	1	
+6	5	2	
+0	7	8	
+
+Direction Moved: Left
+Depth          : 14
+Primary   Cost : 14
+Secondary Cost : 56
+-----------------------
+Current Node: 
+
+4	3	1	
+0	5	2	
+6	7	8	
+
+Direction Moved: Up
+Depth          : 15
+Primary   Cost : 15
+Secondary Cost : 62
+-----------------------
+Current Node: 
+
+0	3	1	
+4	5	2	
+6	7	8	
+
+Direction Moved: Up
+Depth          : 16
+Primary   Cost : 16
+Secondary Cost : 66
+-----------------------
+Current Node: 
+
+3	0	1	
+4	5	2	
+6	7	8	
+
+Direction Moved: Right
+Depth          : 17
+Primary   Cost : 17
+Secondary Cost : 69
+-----------------------
+Current Node: 
+
+3	1	0	
+4	5	2	
+6	7	8	
+
+Direction Moved: Right
+Depth          : 18
+Primary   Cost : 18
+Secondary Cost : 70
+-----------------------
+Current Node: 
+
+3	1	2	
+4	5	0	
+6	7	8	
+
+Direction Moved: Down
+Depth          : 19
+Primary   Cost : 19
+Secondary Cost : 72
+-----------------------
+Current Node: 
+
+3	1	2	
+4	0	5	
+6	7	8	
+
+Direction Moved: Left
+Depth          : 20
+Primary   Cost : 20
+Secondary Cost : 77
+-----------------------
+Current Node: 
+
+3	1	2	
+0	4	5	
+6	7	8	
+
+Direction Moved: Left
+Depth          : 21
+Primary   Cost : 21
+Secondary Cost : 81
+-----------------------
+Current Node: 
+
+0	1	2	
+3	4	5	
+6	7	8	
+
+Direction Moved: Up
+Depth          : 22
+Primary   Cost : 22
+Secondary Cost : 84
+-----------------------
+Time: 770.0 millie seconds
+Space: 19352

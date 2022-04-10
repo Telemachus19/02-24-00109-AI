@@ -3,14 +3,23 @@ package puzzle8;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
- * Our node for the board needs
- * - a parent
- * - a state (a description of this state as a string for the hash table)
- * - children
- * - position of missing tile
- * - Action taken to reach this node
- * */
+/**
+ * Our node for the board contains
+ * <ul>
+ *     <li>a parent</li>
+ *     <li>a state (a description of this state as a string for the hash table)</li>
+ *     <li>children</li>
+ *     <li>position of missing tile</li>
+ *     <li>Action taken to reach this node</li>
+ * </ul>
+ * Methods:
+ * <ul>
+ *     <li>createStringBoard</li>
+ *     <li>addChild - helper function</li>
+ *     <li>createChild</li>
+ *     <li>getRowCol</li>
+ * </ul>
+ */
 public class Node {
     // Data fields
     private Node parent;
@@ -18,7 +27,7 @@ public class Node {
     private int[][] state;
     private String stringState;
     private Action direction;
-    private int depth = 0, missingTileRow, missingTileCol, cost;
+    private int depth = 0, missingTileRow, missingTileCol, cost, secondaryCost;
 
     // Constructor
     public Node(int[][] state) {
@@ -49,12 +58,15 @@ public class Node {
         return sb.toString();
     }
 
-    // Add child function which will act as a helper function later
+    /* Add child function which will act as a helper function later
+     * sets the parent,depth,cost, and secondary cost of the child then add the child to list of children
+     * */
     /*داله مساعدة عشان لما نيجي تعمل ال child ل ال node*/
     public void addChild(Node child) {
         child.setParent(this);
         child.setDepth(this.depth + 1);
         child.setCost(this.cost + 1);
+        child.setSecondaryCost(this.secondaryCost + child.secondaryCost);
         this.children.add(child);
     }
 
@@ -74,8 +86,10 @@ public class Node {
         placeholder[missingTileRow][missingTileCol] = placeholder[a][b];
         placeholder[a][b] = 0;
         Node child = new Node(placeholder);
+        // sets the cost, and secondary cost of the child.
+        child.setSecondaryCost(placeholder[missingTileRow][missingTileCol]);
         child.setCost(1);
-        this.addChild(child); // using the helper fn created earlier
+        this.addChild(child); // using the helper function created earlier
         return child;
     }
 
@@ -83,6 +97,8 @@ public class Node {
      * المكان بيرجع علي هيئة array
      * 0 -> س
      * 1 -> ص*/
+    /* getRowCol returns a container ,where 0 is the i (row) and 1 is j (col),
+     that contains the coordinates of a certain value*/
     public int[] getRowCol(int value) {
         int[] container = new int[2];
         for (int i = 0; i < 3; i++) {
@@ -97,6 +113,7 @@ public class Node {
         return container;
     }
 
+    /*Overrides the equals function so that it uses the String State of the node*/
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof Node checker)) {
@@ -112,6 +129,7 @@ public class Node {
     }
 
     /*بيحول ال String ل كود عشان لما تنجي نعمل جدول تحتفظة فيه بال node اللي شوفناها قبل كدة*/
+    /*Overrides the hashCode function so that it uses the hashCode of String State of the node*/
     @Override
     public int hashCode() {
         return this.stringState.hashCode();
@@ -150,6 +168,14 @@ public class Node {
         return state;
     }
 
+    public List<Node> getChildren() {
+        return children;
+    }
+
+    public int getSecondaryCost() {
+        return secondaryCost;
+    }
+
     // Setters
     public void setParent(Node parent) {
         this.parent = parent;
@@ -167,6 +193,30 @@ public class Node {
         this.direction = direction;
     }
 
+    public void setChildren(List<Node> children) {
+        this.children = children;
+    }
+
+    public void setState(int[][] state) {
+        this.state = state;
+    }
+
+    public void setStringState(String stringState) {
+        this.stringState = stringState;
+    }
+
+    public void setMissingTileRow(int missingTileRow) {
+        this.missingTileRow = missingTileRow;
+    }
+
+    public void setMissingTileCol(int missingTileCol) {
+        this.missingTileCol = missingTileCol;
+    }
+
+
+    public void setSecondaryCost(int secondaryCost) {
+        this.secondaryCost = secondaryCost;
+    }
 
     @Override
     public String toString() {
