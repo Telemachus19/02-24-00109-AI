@@ -1,0 +1,129 @@
+02:04:05.800 [main                     ] DEBUG Logger               - Configured Logger
+02:04:05.832 [main                     ] DEBUG GameApplication      - Logging settings
+Title: Untitled
+Version: 1.0
+Width: 880
+Height: 720
+Fullscreen: false
+Intro: false
+Profiling: false
+Single step:false
+App Mode: DEVELOPER
+Menu Key: ESCAPE
+Stage Style: DECORATED
+Scene Factory: class com.almasb.fxgl.app.scene.SceneFactory
+
+02:04:06.082 [JavaFX Application Thread] DEBUG FXGLApplication      - Initializing FXGL
+02:04:06.090 [JavaFX Application Thread] INFO  Engine               - FXGL-17.1 (24.03.2022 17.34) on WINDOWS (J:17.0.3 FX:17.0.1)
+02:04:06.091 [JavaFX Application Thread] DEBUG Engine               - JRE Vendor Name: Eclipse Adoptium
+02:04:06.091 [JavaFX Application Thread] DEBUG Engine               - Running on OS: Windows 10 version 10.0
+02:04:06.091 [JavaFX Application Thread] DEBUG Engine               - Architecture: amd64
+02:04:06.092 [JavaFX Application Thread] INFO  Engine               - Source code and latest versions at: https://github.com/AlmasB/FXGL
+02:04:06.092 [JavaFX Application Thread] INFO  Engine               -       Ask questions and discuss at: https://github.com/AlmasB/FXGL/discussions
+02:04:06.092 [JavaFX Application Thread] INFO  Engine               -              Join the FXGL chat at: https://gitter.im/AlmasB/FXGL
+02:04:06.204 [JavaFX Application Thread] DEBUG PrimaryStageWindow   - Creating a JavaFX scene
+02:04:06.240 [JavaFX Application Thread] DEBUG PrimaryStageWindow   - Target settings size: 880.0 x 720.0
+02:04:06.240 [JavaFX Application Thread] DEBUG PrimaryStageWindow   - Scaled scene size:    880.0 x 720.0
+02:04:06.240 [JavaFX Application Thread] DEBUG PrimaryStageWindow   - Scaled ratio: (1.0, 1.0)
+02:04:06.241 [JavaFX Application Thread] DEBUG PrimaryStageWindow   - Set initial scene to FXGLStartupScene
+02:04:06.245 [JavaFX Application Thread] DEBUG PrimaryStageWindow   - Opening main window
+02:04:06.309 [JavaFX Application Thread] DEBUG PrimaryStageWindow   - Window border size: (16.0, 39.0)
+02:04:06.310 [JavaFX Application Thread] DEBUG PrimaryStageWindow   - Scaled size: 880.0 x 720.0
+02:04:06.310 [JavaFX Application Thread] DEBUG PrimaryStageWindow   - Scaled ratio: (1.0, 1.0)
+02:04:06.310 [JavaFX Application Thread] DEBUG PrimaryStageWindow   - Scene size: 880.0 x 720.0
+02:04:06.311 [JavaFX Application Thread] DEBUG PrimaryStageWindow   - Stage size: 896.0 x 759.0
+02:04:06.319 [FXGL Background Thread 1 ] DEBUG Engine               - Initializing environment variables
+02:04:06.358 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoaderServi - User app class for loading assets: class puzzleEight.eightpuzzle.EightSlidingPuzzle
+02:04:06.359 [FXGL Background Thread 1 ] DEBUG GameApplicationServi - Applying CSS: fxgl_dark.css
+02:04:06.359 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoaderServi - Loading from file system: jar:file:///C:/Users/telemachus/.gradle/caches/modules-2/files-2.1/com.github.almasb/fxgl/17.1/2a9509aedf54954c9b13849c18c6f495a81c542d/fxgl-17.1.jar!/fxglassets/ui/css/fxgl_dark.css
+02:04:06.405 [FXGL Background Thread 1 ] DEBUG GameApplicationServi - Initializing application scenes
+02:04:06.453 [FXGL Background Thread 1 ] DEBUG GameWorld            - Game world initialized
+02:04:06.513 [FXGL Background Thread 1 ] DEBUG PhysicsWorld         - Physics world initialized: appHeight=720, physics.ppm=50.0
+02:04:06.513 [FXGL Background Thread 1 ] DEBUG PhysicsWorld         - Using strategy: BRUTE_FORCE
+02:04:06.520 [FXGL Background Thread 1 ] DEBUG GameScene            - Game scene initialized: 880x720
+02:04:06.537 [FXGL Background Thread 1 ] DEBUG FXGL.DefaultMenu     - createMenuBodyGameMenu()
+02:04:06.554 [FXGL Background Thread 1 ] DEBUG FXGL.DefaultMenu     - createOptionsMenu()
+02:04:06.567 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoaderServi - Loading from file system: jar:file:///C:/Users/telemachus/.gradle/caches/modules-2/files-2.1/com.github.almasb/fxgl/17.1/2a9509aedf54954c9b13849c18c6f495a81c542d/fxgl-17.1.jar!/fxglassets/textures/particles/smoke.png
+02:04:06.683 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoaderServi - Loading from file system: jar:file:///C:/Users/telemachus/.gradle/caches/modules-2/files-2.1/com.github.almasb/fxgl/17.1/2a9509aedf54954c9b13849c18c6f495a81c542d/fxgl-17.1.jar!/fxglassets/textures/particles/trace_horizontal.png
+02:04:06.720 [FXGL Background Thread 1 ] DEBUG GameApplicationServi - Application scenes initialized
+02:04:06.732 [FXGL Background Thread 1 ] DEBUG SystemBundleService  - Loading FXGL system data
+02:04:06.737 [FXGL Background Thread 1 ] DEBUG FileSystemAccess     - Reading from: D:\Computer-Science\02-24-00109-AI\Assignment1\EightPuzzle\system\fxgl.bundle
+02:04:06.742 [FXGL Background Thread 1 ] DEBUG SystemBundleService  - Bundle FXGL: {}
+02:04:06.742 [FXGL Background Thread 1 ] DEBUG UpdaterService       - Checking for updates
+02:04:06.746 [FXGL Background Thread 4 ] DEBUG FXGLApplication      - Loading fonts
+02:04:06.746 [FXGL Background Thread 4 ] DEBUG FXGLAssetLoaderServi - Loading from file system: jar:file:///C:/Users/telemachus/.gradle/caches/modules-2/files-2.1/com.github.almasb/fxgl/17.1/2a9509aedf54954c9b13849c18c6f495a81c542d/fxgl-17.1.jar!/fxglassets/ui/fonts/VarelaRound-Regular.ttf
+02:04:06.746 [FXGL Background Thread 1 ] DEBUG FXGLApplication      - Loading default localization
+02:04:06.747 [FXGL Background Thread 1 ] DEBUG FXGLAssetLoaderServi - Loading from file system: jar:file:///C:/Users/telemachus/.gradle/caches/modules-2/files-2.1/com.github.almasb/fxgl/17.1/2a9509aedf54954c9b13849c18c6f495a81c542d/fxgl-17.1.jar!/fxglassets/languages/english.lang
+02:04:06.763 [FXGL Background Thread 1 ] INFO  FXGLApplication      - FXGL initialization took: 0.444 sec
+02:04:06.777 [JavaFX Application Thread] DEBUG Input                - Registered new binding: Move Right - Right
+02:04:06.777 [JavaFX Application Thread] DEBUG Input                - Registered new binding: Move Left - Left
+02:04:06.778 [JavaFX Application Thread] DEBUG Input                - Registered new binding: Move Up - Up
+02:04:06.778 [JavaFX Application Thread] DEBUG Input                - Registered new binding: Move Down - Down
+02:04:06.778 [JavaFX Application Thread] DEBUG FXGLAssetLoaderServi - Loading from file system: jar:file:///C:/Users/telemachus/.gradle/caches/modules-2/files-2.1/com.github.almasb/fxgl/17.1/2a9509aedf54954c9b13849c18c6f495a81c542d/fxgl-17.1.jar!/fxglassets/textures/fxgl_icon.png
+02:04:06.804 [JavaFX Application Thread] DEBUG FXGLAssetLoaderServi - Loading from file system: jar:file:///C:/Users/telemachus/.gradle/caches/modules-2/files-2.1/com.github.almasb/fxgl/17.1/2a9509aedf54954c9b13849c18c6f495a81c542d/fxgl-17.1.jar!/fxglassets/textures/fxgl_default_cursor.png
+02:04:06.806 [JavaFX Application Thread] DEBUG Input                - Registered new binding: Screenshot - CTRL+8
+02:04:06.807 [JavaFX Application Thread] DEBUG Input                - Registered new binding: System info dump - CTRL+9
+02:04:06.807 [JavaFX Application Thread] DEBUG Input                - Registered new binding: Restart - CTRL+R
+02:04:06.808 [JavaFX Application Thread] DEBUG Input                - Registered new binding: Toggle Debug Camera - CTRL+7
+02:04:06.811 [JavaFX Application Thread] DEBUG LoopRunner           - Starting loop
+02:04:06.811 [JavaFX Application Thread] DEBUG LoopRunner           - Initializing JavaFX AnimationTimerLoop
+02:04:06.812 [JavaFX Application Thread] DEBUG GameApplicationServi - Starting new game
+02:04:06.813 [JavaFX Application Thread] DEBUG Input                - Clearing active input actions
+02:04:06.827 [JavaFX Application Thread] DEBUG GameApplicationServi - Removing overlay from FXGLStartupScene and adding to FXGLLoadingScene
+02:04:06.828 [JavaFX Application Thread] DEBUG PrimaryStageWindow   - FXGLStartupScene -> FXGLLoadingScene
+02:04:06.828 [JavaFX Application Thread] DEBUG GameApplicationServi - Clearing previous game
+02:04:06.828 [JavaFX Application Thread] DEBUG GameScene            - Clearing game scene
+02:04:06.828 [JavaFX Application Thread] DEBUG GameWorld            - Clearing game world
+02:04:06.828 [JavaFX Application Thread] DEBUG PhysicsWorld         - Clearing physics world
+02:04:06.830 [FXGL Background Thread 1 ] DEBUG FXGLApplication      - Initializing game
+02:04:06.844 [FXGL Background Thread 4 ] DEBUG FXGLAssetLoaderServi - Loading from file system: jar:file:///C:/Users/telemachus/.gradle/caches/modules-2/files-2.1/com.github.almasb/fxgl/17.1/2a9509aedf54954c9b13849c18c6f495a81c542d/fxgl-17.1.jar!/fxglassets/ui/fonts/Abel-Regular.ttf
+02:04:06.850 [FXGL Background Thread 4 ] DEBUG FXGLAssetLoaderServi - Loading from file system: jar:file:///C:/Users/telemachus/.gradle/caches/modules-2/files-2.1/com.github.almasb/fxgl/17.1/2a9509aedf54954c9b13849c18c6f495a81c542d/fxgl-17.1.jar!/fxglassets/ui/fonts/TerminalLandMono-Regular.otf
+02:04:06.856 [FXGL Background Thread 4 ] DEBUG FXGLAssetLoaderServi - Loading from file system: jar:file:///C:/Users/telemachus/.gradle/caches/modules-2/files-2.1/com.github.almasb/fxgl/17.1/2a9509aedf54954c9b13849c18c6f495a81c542d/fxgl-17.1.jar!/fxglassets/ui/fonts/Courier-Prime.ttf
+02:04:06.858 [FXGL Background Thread 1 ] WARN  FXGLAssetLoaderServi - Asset "/assets/textures/tile0.png" was not found!
+02:04:06.858 [FXGL Background Thread 1 ] WARN  FXGLAssetLoaderServi - Failed to load IMAGE
+02:04:06.980 [JavaFX Application Thread] DEBUG FXGLApplication      - Registering font factories with UI factory
+02:04:06.981 [FXGL Background Thread 1 ] WARN  FXGLAssetLoaderServi - Asset "/assets/textures/tile.png" was not found!
+02:04:06.981 [FXGL Background Thread 1 ] WARN  FXGLAssetLoaderServi - Failed to load IMAGE
+02:04:06.984 [FXGL Background Thread 1 ] WARN  FXGLAssetLoaderServi - Asset "/assets/textures/tile.png" was not found!
+02:04:06.985 [FXGL Background Thread 1 ] WARN  FXGLAssetLoaderServi - Failed to load IMAGE
+02:04:06.986 [FXGL Background Thread 1 ] WARN  FXGLAssetLoaderServi - Asset "/assets/textures/tile.png" was not found!
+02:04:06.986 [FXGL Background Thread 1 ] WARN  FXGLAssetLoaderServi - Failed to load IMAGE
+02:04:06.988 [FXGL Background Thread 1 ] WARN  FXGLAssetLoaderServi - Asset "/assets/textures/tile.png" was not found!
+02:04:06.988 [FXGL Background Thread 1 ] WARN  FXGLAssetLoaderServi - Failed to load IMAGE
+02:04:06.989 [FXGL Background Thread 1 ] WARN  FXGLAssetLoaderServi - Asset "/assets/textures/tile.png" was not found!
+02:04:06.990 [FXGL Background Thread 1 ] WARN  FXGLAssetLoaderServi - Failed to load IMAGE
+02:04:06.991 [FXGL Background Thread 1 ] WARN  FXGLAssetLoaderServi - Asset "/assets/textures/tile.png" was not found!
+02:04:06.991 [FXGL Background Thread 1 ] WARN  FXGLAssetLoaderServi - Failed to load IMAGE
+02:04:07.004 [FXGL Background Thread 1 ] WARN  FXGLAssetLoaderServi - Asset "/assets/textures/tile.png" was not found!
+02:04:07.004 [FXGL Background Thread 1 ] WARN  FXGLAssetLoaderServi - Failed to load IMAGE
+02:04:07.006 [FXGL Background Thread 1 ] WARN  FXGLAssetLoaderServi - Asset "/assets/textures/tile.png" was not found!
+02:04:07.006 [FXGL Background Thread 1 ] WARN  FXGLAssetLoaderServi - Failed to load IMAGE
+02:04:07.007 [FXGL Background Thread 1 ] WARN  FXGLAssetLoaderServi - Asset "/assets/textures/tile.png" was not found!
+02:04:07.007 [FXGL Background Thread 1 ] WARN  FXGLAssetLoaderServi - Failed to load IMAGE
+02:04:07.009 [FXGL Background Thread 1 ] WARN  FXGLAssetLoaderServi - Asset "/assets/textures/tile.png" was not found!
+02:04:07.009 [FXGL Background Thread 1 ] WARN  FXGLAssetLoaderServi - Failed to load IMAGE
+02:04:07.010 [FXGL Background Thread 1 ] WARN  FXGLAssetLoaderServi - Asset "/assets/textures/tile.png" was not found!
+02:04:07.011 [FXGL Background Thread 1 ] WARN  FXGLAssetLoaderServi - Failed to load IMAGE
+02:04:07.012 [FXGL Background Thread 1 ] WARN  FXGLAssetLoaderServi - Asset "/assets/textures/tile.png" was not found!
+02:04:07.012 [FXGL Background Thread 1 ] WARN  FXGLAssetLoaderServi - Failed to load IMAGE
+02:04:07.014 [FXGL Background Thread 1 ] WARN  FXGLAssetLoaderServi - Asset "/assets/textures/tile.png" was not found!
+02:04:07.014 [FXGL Background Thread 1 ] WARN  FXGLAssetLoaderServi - Failed to load IMAGE
+02:04:07.016 [FXGL Background Thread 1 ] WARN  FXGLAssetLoaderServi - Asset "/assets/textures/tile.png" was not found!
+02:04:07.016 [FXGL Background Thread 1 ] WARN  FXGLAssetLoaderServi - Failed to load IMAGE
+02:04:07.018 [FXGL Background Thread 1 ] WARN  FXGLAssetLoaderServi - Asset "/assets/textures/tile.png" was not found!
+02:04:07.018 [FXGL Background Thread 1 ] WARN  FXGLAssetLoaderServi - Failed to load IMAGE
+02:04:07.031 [FXGL Background Thread 1 ] WARN  FXGLAssetLoaderServi - Asset "/assets/textures/shuffle1.png" was not found!
+02:04:07.031 [FXGL Background Thread 1 ] WARN  FXGLAssetLoaderServi - Failed to load IMAGE
+02:04:07.031 [FXGL Background Thread 1 ] WARN  FXGLAssetLoaderServi - Asset "/assets/textures/shuffle2.png" was not found!
+02:04:07.032 [FXGL Background Thread 1 ] WARN  FXGLAssetLoaderServi - Failed to load IMAGE
+02:04:07.034 [FXGL Background Thread 1 ] INFO  FXGLApplication      - Game initialization took: 0.204 sec
+02:04:07.053 [JavaFX Application Thread] DEBUG Input                - Clearing active input actions
+02:04:07.069 [JavaFX Application Thread] DEBUG GameApplicationServi - Removing overlay from FXGLLoadingScene and adding to GameScene
+02:04:07.070 [JavaFX Application Thread] DEBUG PrimaryStageWindow   - FXGLLoadingScene -> GameScene
+02:04:08.611 [JavaFX Application Thread] DEBUG FXGLApplication      - Exiting FXGL
+02:04:08.612 [JavaFX Application Thread] DEBUG LoopRunner           - Stopping loop
+02:04:08.612 [JavaFX Application Thread] DEBUG SystemBundleService  - Saving FXGL system data
+02:04:08.613 [JavaFX Application Thread] DEBUG FileSystemAccess     - Writing to: D:\Computer-Science\02-24-00109-AI\Assignment1\EightPuzzle\system\fxgl.bundle
+02:04:08.615 [JavaFX Application Thread] DEBUG Async                - Shutting down background threads
+02:04:08.615 [JavaFX Application Thread] DEBUG PrimaryStageWindow   - Closing main window
+02:04:08.626 [JavaFX Application Thread] DEBUG Logger               - Closing Logger
