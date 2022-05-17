@@ -17,16 +17,12 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
-/**
- * @author Almas Baimagambetov (almaslvl@gmail.com)
- */
 public class ConnectFourMainMenu extends GameApplication {
     @Override
     protected void initSettings(GameSettings settings) {
         settings.setSceneFactory(new SceneFactory() {
             @Override
             public FXGLMenu newGameMenu() {
-                //return new SimpleGameMenu();
                 return new MyMainMenu();
             }
         });
@@ -63,9 +59,7 @@ public class ConnectFourMainMenu extends GameApplication {
             btn2.fillProperty().bind(
                     Bindings.when(btn2.pressedProperty()).then(Color.YELLOW).otherwise(Color.color(0.1, 0.05, 0.0, 0.75))
             );
-            btn2.setOnMouseClicked(e ->{
-                fireNewGame();
-            });
+            btn2.setOnMouseClicked(e -> fireNewGame());
             var exitBtn = new Rectangle(0,btn2.getY() + 50,SIZE,50);
             exitBtn.setStrokeWidth(2.5);
             exitBtn.strokeProperty().bind(
@@ -74,9 +68,7 @@ public class ConnectFourMainMenu extends GameApplication {
             exitBtn.fillProperty().bind(
                     Bindings.when(exitBtn.pressedProperty()).then(Color.YELLOW).otherwise(Color.color(0.1, 0.05, 0.0, 0.75))
             );
-            exitBtn.setOnMouseClicked(e ->{
-                fireExit();
-            });
+            exitBtn.setOnMouseClicked(e -> fireExit());
             Text textResume = FXGL.getUIFactoryService().newText("RESUME", Color.WHITE, FontType.GAME, 24.0);
             textResume.setTranslateX(50);
             textResume.setTranslateY(100);

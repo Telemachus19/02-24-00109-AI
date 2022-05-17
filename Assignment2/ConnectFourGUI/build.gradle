@@ -25,7 +25,7 @@ tasks.withType(JavaCompile) {
 
 application {
     mainModule = 'com.connectfourgui'
-    mainClass = 'com.connectfourgui.HelloApplication'
+    mainClass = 'com.connectfourgui.ConnectFourGUI'
 }
 
 javafx {

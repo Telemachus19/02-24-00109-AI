@@ -100,6 +100,7 @@ public class Tree {
 
     /**
      * Implements the breadth first search with an early goal test.
+     * @return true if a solution was found; false if the search exhausted all possible positions
      */
     public boolean breadthFirstSearch() {
         double startTime = System.currentTimeMillis();

@@ -3,12 +3,13 @@ package puzzle8;
 import java.util.Scanner;
 
 public class Main {
+    private static Scanner console = new Scanner(System.in);
+
     public static void failure() {
         System.out.println("The puzzle you have entered is unsolvable and resulted in failure");
     }
 
     public static int chooseHeuristic() {
-        Scanner sc = new Scanner(System.in);
         int input;
         boolean inputCorrect = false;
         do {
@@ -19,7 +20,7 @@ public class Main {
             System.out.println("3. Misplaced Tiles");
             System.out.println();
             System.out.print("Enter your choice: ");
-            input = sc.nextInt();
+            input = console.nextInt();
             if (input <= 3 && input >= 1) {
                 inputCorrect = true;
             } else {
@@ -31,7 +32,6 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
         int[][] initialState = new int[3][3];
         int input1, input2;
         System.out.println("Welcome to 8 puzzle Solver");
@@ -41,13 +41,13 @@ public class Main {
             int[] freq = new int[9];
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
-                    initialState[i][j] = sc.nextInt();
+                    initialState[i][j] = console.nextInt();
                     if (initialState[i][j] > 8)
                         break;
                     freq[initialState[i][j]]++;
                 }
             }
-            sc.nextLine();
+            console.nextLine();
             for (int i = 0; i < 9; i++) {
                 if (freq[i] != 1) {
                     inputCorrect = false;
@@ -70,7 +70,7 @@ public class Main {
             System.out.println("5. A*");
             System.out.println();
             System.out.print("Enter your choice: ");
-            input1 = sc.nextInt();
+            input1 = console.nextInt();
             if (input1 <= 5 && input1 >= 1) {
                 inputCorrect = true;
             } else {
