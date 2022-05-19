@@ -16,55 +16,73 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
-import java.util.*;
+import java.util.ArrayList;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 
+/**
+ * Main Game class that contains the logic
+ *
+ * @author telemachus
+ */
 public class ConnectFourGUI extends GameApplication {
     /**
-     * List of the global variables
-     * <ul>
-     *      <li><code>PLAYER:int</code></li>
-     *      <li><code>AI:int</code></li>
-     *      <li><code>EMPTY:int</code></li>
-     *          <ul>
-     *              <li><code>PLAYER,AI,EMPTY</code> are used to denote the pieces in the terminal board</li>
-     *          </ul>
-     *      <li><code>TILE_SIZE:int</code></li>
-     *      <li><code>SPEED:int</code></li>
-     *          <ul>
-     *              <li>Used to control the speed of the ball when the keyboard keys are used</li>
-     *          </ul>
-     *      <li><code>MAX_ROWS:int</code></li>
-     *      <li><code>MAX_COLS:int</code></li>
-     *      <li><code>MAX_WIDTH:int</code></li>
-     *      <li><code>MAX_HEIGHT:int</code></li>
-     *          <ul>
-     *              <li>Used to reshape the windows according to the size of the tile</li>
-     *          </ul>
-     *      <li><code>col:int</code></li>
-     *      <li><code>row:int</code></li>
-     *      <li><code>playerScore:int</code></li>
-     *      <li><code>aiScore:int</code></li>
-     *      <li><code>terminalBoard:int[][]</code></li>
-     *      <li><code>alphaBeta:boolean</code></li>
-     * </ul>
+     * Used to denote the pieces in the terminal board.
      */
     protected static final int PLAYER = 1, AI = 2, EMPTY = 0;
-
+    /**
+     * Controls the size of the tiles when drawing the board
+     */
     protected static final int TILE_SIZE = 125;
+    /**
+     * Controls the speed of the ball when keyboard keys are used
+     */
     protected static final int SPEED = 5;
+    /**
+     * The number of rows and columns in the game board
+     */
     protected static final int MAX_ROWS = 6, MAX_COLS = 7;
+    /**
+     * Controls the width of the window
+     */
     protected static final int MAX_WIDTH = MAX_COLS * TILE_SIZE;
+    /**
+     * Controls the height of the window
+     */
     protected static final int MAX_HEIGHT = (MAX_ROWS + 1) * TILE_SIZE;
+    /**
+     * Offset where it is three
+     */
+    protected static final int OFFSET = 3;
+
+    /**
+     * <code>col</code> keeps track of the col where the piece will be dropped <br>
+     * <code>row</code> keeps track of the row where the piece will be dropped <br>
+     * <code>playerScore</code> Keeps track of the player score <br>
+     * <code>aiScore</code> keeps track of the AI score <br>
+     */
     protected int col, row, playerScore = 0, aiScore = 0;
+    /**
+     * Cell length that is going to be used when the board is going to be divided into cells
+     */
     protected static final int CELL_LENGTH = 4;
+    /**
+     * Initiates the  board
+     */
     protected int[][] terminalBoard = createBoard();
+    /**
+     * used to connect the main menu if alphaBeta is true then the minimax algorithm will implement with turning; else without pruning
+     */
     public static boolean alphaBeta = true;
+    /**
+     * Search tree
+     */
     public static TreeNode boardTree;
 
     /**
      * Creates the initial board with the specified dimensions
+     *
+     * @return A 2d array th
      */
     public static int[][] createBoard() {
         return new int[MAX_ROWS][MAX_COLS];
@@ -97,7 +115,7 @@ public class ConnectFourGUI extends GameApplication {
      *
      * @param board The board that will be checked
      * @param col   column of the board.
-     * @return an row that doesn't have a piece in it.
+     * @return a row that doesn't have a piece in it.
      */
     public static int getOpenRow(int[][] board, int col) {
         int row;
@@ -130,7 +148,7 @@ public class ConnectFourGUI extends GameApplication {
      */
     public static boolean GameOver(int[][] board, int piece) {
         // Horizontal
-        for (int c = 0; c < MAX_COLS - 3; c++) {
+        for (int c = 0; c < MAX_COLS - OFFSET; c++) {
             for (int r = 0; r < MAX_ROWS; r++) {
                 if (board[r][c] == piece && board[r][c + 1] == piece && board[r][c + 2] == piece && board[r][c + 3] == piece) {
                     return true;
@@ -139,22 +157,22 @@ public class ConnectFourGUI extends GameApplication {
         }
         // vertical check
         for (int c = 0; c < MAX_COLS; c++) {
-            for (int r = 0; r < MAX_ROWS - 3; r++) {
+            for (int r = 0; r < MAX_ROWS - OFFSET; r++) {
                 if (board[r][c] == piece && board[r + 1][c] == piece && board[r + 2][c] == piece && board[r + 3][c] == piece) {
                     return true;
                 }
             }
         }
         // Positive Diagonal check
-        for (int c = 0; c < MAX_COLS - 3; c++) {
-            for (int r = 0; r < MAX_ROWS - 3; r++) {
+        for (int c = 0; c < MAX_COLS - OFFSET; c++) {
+            for (int r = 0; r < MAX_ROWS - OFFSET; r++) {
                 if (board[r][c] == piece && board[r + 1][c + 1] == piece && board[r + 2][c + 2] == piece && board[r + 3][c + 3] == piece) {
                     return true;
                 }
             }
         }
         // negative Diagonal check
-        for (int c = 0; c < MAX_COLS - 3; c++) {
+        for (int c = 0; c < MAX_COLS - OFFSET; c++) {
             for (int r = 3; r < MAX_ROWS; r++) {
                 if (board[r][c] == piece && board[r - 1][c + 1] == piece && board[r - 2][c + 2] == piece && board[r - 3][c + 3] == piece) {
                     return true;
@@ -195,6 +213,19 @@ public class ConnectFourGUI extends GameApplication {
     }
 
     /**
+     * checks if there are 4 pieces of the same type in a row otherwise return 0
+     *
+     * @param cell  the cell that is going to evaluate
+     * @param piece that the cell will be evaluated for
+     * @return 1 if there are 4 pieces of; else 0
+     */
+    private static int connectFour(int[] cell, int piece) {
+        int cellScore = 0;
+        if (countPieces(cell, piece) == 4) cellScore += 1;
+        return cellScore;
+    }
+
+    /**
      * counts the specified piece in the array or the cell
      *
      * @param arr   The array or the cell that contains the pieces
@@ -222,16 +253,15 @@ public class ConnectFourGUI extends GameApplication {
     private static int scorePosition(int[][] board, int piece) {
         int boardScore = 0;
         // Score center column and favour it.
-//        int[] centerArr = makeColArr(board, MAX_COLS / 2);
-//        int centerCount = countPieces(centerArr, piece);
-//        boardScore += centerCount * 3;
-
+        int[] centerArr = makeColArr(board, MAX_COLS / 2);
+        int centerCount = countPieces(centerArr, piece);
+        boardScore += centerCount * 3;
         // Score Horizontal
         for (int row = 0; row < MAX_ROWS; row++) {
             // make the row into an array
             int[] rowArr = makeRowArr(board, row);
             // takes cell units where each cell is 4 units
-            for (int col = 0; col < MAX_COLS - 3; col++) {
+            for (int col = 0; col < MAX_COLS - OFFSET; col++) {
                 int[] cell = new int[CELL_LENGTH];
                 System.arraycopy(rowArr, col, cell, 0, CELL_LENGTH);
                 boardScore += evaluateCell(cell, piece);
@@ -241,15 +271,15 @@ public class ConnectFourGUI extends GameApplication {
         for (int col = 0; col < MAX_COLS; col++) {
             // makes the column into an array
             int[] colArr = makeColArr(board, col);
-            for (int row = 0; row < MAX_ROWS - 3; row++) {
+            for (int row = 0; row < MAX_ROWS - OFFSET; row++) {
                 int[] cell = new int[CELL_LENGTH];
                 System.arraycopy(colArr, row, cell, 0, CELL_LENGTH);
                 boardScore += evaluateCell(cell, piece);
             }
         }
         // score Positive Diagonally
-        for (int row = 0; row < MAX_ROWS - 3; row++) {
-            for (int col = 0; col < MAX_COLS - 3; col++) {
+        for (int row = 0; row < MAX_ROWS - OFFSET; row++) {
+            for (int col = 0; col < MAX_COLS - OFFSET; col++) {
                 int[] cell = new int[CELL_LENGTH];
                 for (int i = 0; i < CELL_LENGTH; i++) {
                     cell[i] = board[row + i][col + i];
@@ -258,13 +288,67 @@ public class ConnectFourGUI extends GameApplication {
             }
         }
         // score negative Diagonally
-        for (int row = 0; row < MAX_ROWS - 3; row++) {
-            for (int col = 0; col < MAX_COLS - 3; col++) {
+        for (int row = 0; row < MAX_ROWS - OFFSET; row++) {
+            for (int col = 0; col < MAX_COLS - OFFSET; col++) {
                 int[] cell = new int[CELL_LENGTH];
                 for (int i = 0; i < CELL_LENGTH; i++) {
-                    cell[i] = board[row + 3 - i][col + i];
+                    cell[i] = board[row + OFFSET - i][col + i];
                 }
                 boardScore += evaluateCell(cell, piece);
+            }
+        }
+        return boardScore;
+    }
+
+    /**
+     * returns the number of connect fours in the board of a certain piece
+     *
+     * @param board the board that is going to score
+     * @param piece the piece that the board is going be scored for.
+     * @return the number of connect fours of a certain piece
+     */
+
+    private static int numberFours(int[][] board, int piece) {
+        int boardScore = 0;
+        // Score Horizontal
+        for (int row = 0; row < MAX_ROWS; row++) {
+            // make the row into an array
+            int[] rowArr = makeRowArr(board, row);
+            // takes cell units where each cell is 4 units
+            for (int col = 0; col < MAX_COLS - OFFSET; col++) {
+                int[] cell = new int[CELL_LENGTH];
+                System.arraycopy(rowArr, col, cell, 0, CELL_LENGTH);
+                boardScore += connectFour(cell, piece);
+            }
+        }
+        // Score Vertical
+        for (int col = 0; col < MAX_COLS; col++) {
+            // makes the column into an array
+            int[] colArr = makeColArr(board, col);
+            for (int row = 0; row < MAX_ROWS - OFFSET; row++) {
+                int[] cell = new int[CELL_LENGTH];
+                System.arraycopy(colArr, row, cell, 0, CELL_LENGTH);
+                boardScore += connectFour(cell, piece);
+            }
+        }
+        // score Positive Diagonally
+        for (int row = 0; row < MAX_ROWS - OFFSET; row++) {
+            for (int col = 0; col < MAX_COLS - OFFSET; col++) {
+                int[] cell = new int[CELL_LENGTH]; // creates a cell of length 4
+                for (int i = 0; i < CELL_LENGTH; i++) { // Gets the elements of the +ve diagonal
+                    cell[i] = board[row + i][col + i];
+                }
+                boardScore += connectFour(cell, piece);
+            }
+        }
+        // score negative Diagonally
+        for (int row = 0; row < MAX_ROWS - OFFSET; row++) {
+            for (int col = 0; col < MAX_COLS - OFFSET; col++) {
+                int[] cell = new int[CELL_LENGTH]; // creates a cell of length 4
+                for (int i = 0; i < CELL_LENGTH; i++) { // gets the elements of the -ve diagonal
+                    cell[i] = board[row + OFFSET - i][col + i];
+                }
+                boardScore += connectFour(cell, piece);
             }
         }
         return boardScore;
@@ -310,6 +394,8 @@ public class ConnectFourGUI extends GameApplication {
     }
 
     /**
+     * Gets the valid columns that a piece can be dropped into
+     *
      * @param board the board to be checked
      * @return a list that contains the valid columns
      */
@@ -322,8 +408,9 @@ public class ConnectFourGUI extends GameApplication {
     }
 
     /**
-     * minimax algorithm without turning <br>
-     * The terminal node is a board that is completely full
+     * minimax algorithm without pruning <br>
+     * The terminal node is a board that is completely full <br>
+     * if the game is classical then the terminal node is the node that has a connect-four of either piece.
      *
      * @param board     The board that the minimax algorithm will be implemented on
      * @param depth     keeps track of the depth
@@ -338,6 +425,7 @@ public class ConnectFourGUI extends GameApplication {
         // Terminal node where it is the full board
         boolean isTerminalNode = GameOver(board);
         TreeNode newTreeNode;
+        // Base case if the game is classical
         // GameOver(board,piece)
 //        if (depth == 0 || isTerminalNode) {
 //            if (isTerminalNode) {
@@ -352,7 +440,7 @@ public class ConnectFourGUI extends GameApplication {
 //            }
 //        }
         // GameOver(board)
-        // Base case
+        // Custom Base case
         if (depth == 0 || isTerminalNode) {
             if (isTerminalNode) return new int[]{-1, 0}; // Game is over and there is no more valid moves
             else
@@ -392,19 +480,27 @@ public class ConnectFourGUI extends GameApplication {
             // initialize the value or score of the algorithm to +ve infinity where the +ve infinity is going to be represented by the Maximum Integer value.
             value = Integer.MAX_VALUE;
             for (int col : validLocations) {
+                // gets the new open row that the piece can be dropped into
                 int row = getOpenRow(board, col);
+                // initializes  a new game board.
                 int[][] boardCopy = new int[MAX_ROWS][MAX_COLS];
+                // copies the parent node.
                 for (int r = 0; r < MAX_ROWS; r++) {
                     System.arraycopy(board[r], 0, boardCopy[r], 0, MAX_COLS);
                 }
+                // drops the piece into the new board (i.e. the child node)
                 dropPiece(boardCopy, row, col, PLAYER);
+                // create a new child node
                 newTreeNode = new TreeNode(Integer.toString(scorePosition(boardCopy, PLAYER)));
+                // recursive call
                 int newScore = minimax(boardCopy, depth - 1, true, newTreeNode)[1];
+                // update the name of the node with the new score.
                 newTreeNode.name = Integer.toString(newScore);
                 if (newScore < value) {
                     value = newScore;
                     column = col;
                 }
+                // add subtree with the main tree.
                 node.addChild(newTreeNode);
                 node.name = Integer.toString(value);
             }
@@ -412,11 +508,26 @@ public class ConnectFourGUI extends GameApplication {
         return new int[]{column, value};
     }
 
+    /**
+     * minimax algorithm without pruning <br>
+     * The terminal node is a board that is completely full <br>
+     * if the game is classical then the terminal node is the node that has a connect-four of either piece
+     *
+     * @param board     The board that the minimax algorithm will be implemented on
+     * @param depth     keeps track of the depth
+     * @param alpha     the value that is going to be passed if the player is maximizing
+     * @param beta      the value that is going to be passed if the player is minimizing
+     * @param maxPlayer maxPlayer:true or minPlayer:false
+     * @param node      used to keep track of the tree i.e. for printing the tree in the terminal but degrades the performance
+     * @return an array where the first index(0) is the column and index(1) is the value of the algorithm (i.e. the score)
+     */
     private static int[] minimax(int[][] board, int depth, int alpha, int beta, boolean maxPlayer, TreeNode node) {
+        // Gets a list of valid locations (i.e. children of the current position)
         ArrayList<Integer> validLocations = getValidLocations(board);
 //        boolean isTerminalNode = isTerminalNode(board);
         boolean isTerminalNode = GameOver(board);
         TreeNode newTreeNode;
+        // Base case if the game is classical
 //        if (depth == 0 || isTerminalNode) {
 //            if (isTerminalNode) {
 //                if (GameOver(board, AI)) return new int[]{-1, Integer.MAX_VALUE};
@@ -428,50 +539,75 @@ public class ConnectFourGUI extends GameApplication {
 //                return new int[]{-1, scorePosition(board, AI)};
 //            }
 //        }
+        // custom base case
         if (depth == 0 || isTerminalNode) {
             if (isTerminalNode) return new int[]{-1, 0};
             else return new int[]{-1, scorePosition(board, AI)};
         }
+        // value or the score of the minimax
         int value;
+        // initialize the column to random column in the valid locations
         int column = validLocations.get(FXGLMath.random(0, validLocations.size() - 1));
         if (maxPlayer) {
+            // initialize the value or score of the algorithm to -ve infinity where the -ve infinity is going to be represented by the minimum Integer value.
             value = Integer.MIN_VALUE;
             for (int col : validLocations) {
+                // gets the next open that the piece can piece dropped into
                 int row = getOpenRow(board, col);
+                // initializes a new board
                 int[][] boardCopy = new int[MAX_ROWS][MAX_COLS];
+                // copies the parent board
                 for (int r = 0; r < MAX_ROWS; r++) {
                     System.arraycopy(board[r], 0, boardCopy[r], 0, MAX_COLS);
                 }
+                // drops the piece into the copied board (i.e. the child node)
                 dropPiece(boardCopy, row, col, AI);
+                // creates a new node with the copied board.
                 newTreeNode = new TreeNode(Integer.toString(scorePosition(boardCopy, AI)));
+                // recursive call
                 int newScore = minimax(boardCopy, depth - 1, alpha, beta, false, newTreeNode)[1];
+                // updates the score
                 if (newScore > value) {
                     value = newScore;
                     column = col;
                 }
+                // updates the alpha
                 alpha = Integer.max(alpha, value);
-                newTreeNode.name = newScore + ":" + alpha + ":" + beta;
+                // updates the value of the node
+                newTreeNode.name = value + ":" + alpha + ":" + beta;
+                // prune if the alpha is greater or equal to beta
                 if (alpha >= beta) break;
+                // else add the subtree to the main tree
                 node.addChild(newTreeNode);
                 node.name = Integer.toString(value);
             }
         } else {
             value = Integer.MAX_VALUE;
             for (int col : validLocations) {
+                // gets the next open that the piece can piece dropped into
                 int row = getOpenRow(board, col);
+                // initializes a new board
                 int[][] boardCopy = new int[MAX_ROWS][MAX_COLS];
+                // copies the parent board
                 for (int r = 0; r < MAX_ROWS; r++) {
                     System.arraycopy(board[r], 0, boardCopy[r], 0, MAX_COLS);
                 }
+                // drops the piece into the copied board (i.e. the child node)
                 dropPiece(boardCopy, row, col, PLAYER);
+                // creates a new node with the copied board
                 newTreeNode = new TreeNode(Integer.toString(scorePosition(boardCopy, PLAYER)));
+                // recursive call
                 int newScore = minimax(boardCopy, depth - 1, alpha, beta, true, newTreeNode)[1];
+                // update the score
                 if (newScore < value) {
                     value = newScore;
                     column = col;
                 }
+                // update the beta score
                 beta = Integer.min(beta, value);
+                // update the name of the node
                 newTreeNode.name = newScore + ":" + alpha + ":" + beta;
+                // prune if the alpha is greater or equal to beta
                 if (alpha >= beta) break;
                 node.addChild(newTreeNode);
                 node.name = Integer.toString(value);
@@ -480,7 +616,6 @@ public class ConnectFourGUI extends GameApplication {
         return new int[]{column, value};
     }
 
-    // initiate the game settings
     @Override
     protected void initSettings(GameSettings settings) {
         // Sets window width and height
@@ -501,7 +636,9 @@ public class ConnectFourGUI extends GameApplication {
         });
     }
 
-    // Creates the gui board
+    /**
+     * Creates the GUI board
+     */
     private void createGUIBoard() {
         int x, y;
         Color ballColor = Color.BLACK;
@@ -586,11 +723,11 @@ public class ConnectFourGUI extends GameApplication {
     @Override
     protected void onUpdate(double tpf) {
         // Classical check of the game
-//        if (GameOver(TerminalBoard, PLAYER) && playerScore > aiScore) {
+//        if (GameOver(terminalBoard, PLAYER) && playerScore > aiScore) {
 //            System.out.println("Player 1 Wins");
 //            showMessage("Player 1 Wins\n" + "AI Score : " + aiScore + "\nPlayer Score : " + playerScore, () -> getGameController().exit());
 //        }
-//        if (GameOver(TerminalBoard, AI) && aiScore > playerScore) {
+//        if (GameOver(terminalBoard, AI) && aiScore > playerScore) {
 //            showMessage("Player 2 Wins\n" + "AI Score : " + aiScore + "\nPlayer Score : " + playerScore, () -> getGameController().exit());
 //        }
         // Custom check of the game
@@ -599,6 +736,7 @@ public class ConnectFourGUI extends GameApplication {
             showMessage("Player 1 Wins\n" + "AI Score : " + aiScore + "\nPlayer Score : " + playerScore, () -> getGameController().exit());
         }
         if (GameOver(terminalBoard) && aiScore > playerScore) {
+            System.out.println("Player 2 Wins");
             showMessage("Player 2 Wins\n" + "AI Score : " + aiScore + "\nPlayer Score : " + playerScore, () -> getGameController().exit());
         }
     }
@@ -615,12 +753,18 @@ public class ConnectFourGUI extends GameApplication {
         spawn("Player", new SpawnData(horizontalPosition, 0).put("Tile Size", TILE_SIZE).put("color", color));
     }
 
-    // Takes care of the Player turn to reduce redundancy
+    /**
+     * Takes care of the user turn to reduce redundancy
+     *
+     * @param x the position (x-axis) where the ball is going to be dropped into.
+     * @return true if the player played; else false
+     */
     protected boolean userTurn(int x) {
-        col = FXGLMath.floor(x / TILE_SIZE);
+        col = FXGLMath.floor((float) x / TILE_SIZE);
         if (isValidLocation(terminalBoard, col)) {
             row = getOpenRow(terminalBoard, col);
             dropPiece(terminalBoard, row, col, PLAYER);
+            System.out.println("The new Board after the player played : ");
             printBoard(terminalBoard);
             System.out.println("--------------------");
             createGUIBoard();
@@ -630,26 +774,29 @@ public class ConnectFourGUI extends GameApplication {
         return false;
     }
 
-    // Takes care of the AI turn to reduce redundancy
+    /**
+     * takes care of the AI turn to reduce redundancy
+     */
     protected void AITurn() {
         boardTree = new TreeNode();
         double startTime, endTime;
         if (alphaBeta) {
             startTime = System.currentTimeMillis();
-            col = minimax(terminalBoard, 5, Integer.MIN_VALUE, Integer.MAX_VALUE, true, boardTree)[0];
+            col = minimax(terminalBoard, 6, Integer.MIN_VALUE, Integer.MAX_VALUE, true, boardTree)[0];
             endTime = System.currentTimeMillis();
             System.out.println(boardTree);
             System.out.println("Time Taken : " + (endTime - startTime) + " Millie Seconds");
 
         } else {
             startTime = System.currentTimeMillis();
-            col = minimax(terminalBoard, 5, true, boardTree)[0];
+            col = minimax(terminalBoard, 6, true, boardTree)[0];
             endTime = System.currentTimeMillis();
             System.out.println(boardTree);
             System.out.println("Time Taken : " + (endTime - startTime) + " Millie Seconds");
         }
         row = getOpenRow(terminalBoard, col);
         dropPiece(terminalBoard, row, col, AI);
+        System.out.println("The new Board after AI Played : ");
         printBoard(terminalBoard);
         System.out.println("--------------------");
         createGUIBoard();
@@ -660,8 +807,8 @@ public class ConnectFourGUI extends GameApplication {
      * Updates the Score of both the AI and the player
      */
     protected void updateScore() {
-        aiScore += scorePosition(terminalBoard, AI);
-        playerScore += scorePosition(terminalBoard, PLAYER);
+        aiScore = numberFours(terminalBoard, AI);
+        playerScore = numberFours(terminalBoard, PLAYER);
     }
 
     // Initiates the main game loop

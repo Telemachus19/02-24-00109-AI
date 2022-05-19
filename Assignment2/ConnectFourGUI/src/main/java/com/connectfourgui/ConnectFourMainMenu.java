@@ -17,6 +17,9 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
+/**
+ * Controls the main menu of the game
+ */
 public class ConnectFourMainMenu extends GameApplication {
     @Override
     protected void initSettings(GameSettings settings) {
@@ -29,17 +32,20 @@ public class ConnectFourMainMenu extends GameApplication {
     }
 
     public static class MyMainMenu extends FXGLMenu {
-
+        /**
+         * The size of the components
+         */
         private static final int SIZE = 150;
 
         private Animation<?> animation;
 
         public MyMainMenu() {
             super(MenuType.MAIN_MENU);
-
+            // Centers the components in the window
             getContentRoot().setTranslateX(FXGL.getAppWidth() / 2.0 - SIZE);
             getContentRoot().setTranslateY(FXGL.getAppHeight() / 2.0 - SIZE);
-            var btn1 = new Rectangle(0,0,SIZE * 2.2,SIZE - 100);
+            // The first button in the shape of a rectangle and has the text "MiniMax without alpha-beta pruning"
+            var btn1 = new Rectangle(0, 0, SIZE * 2.2, SIZE - 100);
             btn1.setStrokeWidth(2.5);
             btn1.strokeProperty().bind(
                     Bindings.when(btn1.hoverProperty()).then(Color.YELLOW).otherwise(Color.BLACK)
@@ -47,11 +53,13 @@ public class ConnectFourMainMenu extends GameApplication {
             btn1.fillProperty().bind(
                     Bindings.when(btn1.pressedProperty()).then(Color.YELLOW).otherwise(Color.color(0.1, 0.05, 0.0, 0.75))
             );
+            // sets the action taken when the button is pressed
             btn1.setOnMouseClicked(e -> {
                 ConnectFourGUI.alphaBeta = false;
                 fireNewGame();
             });
-            var btn2 = new Rectangle(0,btn1.getY() + 50,SIZE*2,SIZE-100);
+            // The second button in the shape of rectangle and has the text "MiniMax with alpha-beta pruning"
+            var btn2 = new Rectangle(0, btn1.getY() + 50, SIZE * 2, SIZE - 100);
             btn2.setStrokeWidth(2.5);
             btn2.strokeProperty().bind(
                     Bindings.when(btn2.hoverProperty()).then(Color.YELLOW).otherwise(Color.BLACK)
@@ -60,7 +68,8 @@ public class ConnectFourMainMenu extends GameApplication {
                     Bindings.when(btn2.pressedProperty()).then(Color.YELLOW).otherwise(Color.color(0.1, 0.05, 0.0, 0.75))
             );
             btn2.setOnMouseClicked(e -> fireNewGame());
-            var exitBtn = new Rectangle(0,btn2.getY() + 50,SIZE,50);
+            // The exit button in the shape of rectangle
+            var exitBtn = new Rectangle(0, btn2.getY() + 50, SIZE, 50);
             exitBtn.setStrokeWidth(2.5);
             exitBtn.strokeProperty().bind(
                     Bindings.when(exitBtn.hoverProperty()).then(Color.YELLOW).otherwise(Color.BLACK)
@@ -74,12 +83,12 @@ public class ConnectFourMainMenu extends GameApplication {
             textResume.setTranslateY(100);
             textResume.setMouseTransparent(true);
 
-            Text noAlphaBeta = FXGL.getUIFactoryService().newText("Mini Max without alpha beta pruning",Color.WHITE,FontType.GAME,24.0);
-            noAlphaBeta.setTranslateY(btn1.getY() + btn1.getHeight()/2);
+            Text noAlphaBeta = FXGL.getUIFactoryService().newText("Mini Max without alpha beta pruning", Color.WHITE, FontType.GAME, 24.0);
+            noAlphaBeta.setTranslateY(btn1.getY() + btn1.getHeight() / 2);
             noAlphaBeta.setTranslateX(btn1.getX());
             noAlphaBeta.setMouseTransparent(true);
 
-            Text alphaBeta = FXGL.getUIFactoryService().newText("Mini Max with alpha beta pruning",Color.WHITE,FontType.GAME,24.0);
+            Text alphaBeta = FXGL.getUIFactoryService().newText("Mini Max with alpha beta pruning", Color.WHITE, FontType.GAME, 24.0);
             alphaBeta.setTranslateY(btn2.getY() + btn2.getHeight() / 2);
             alphaBeta.setTranslateX(btn2.getX());
             alphaBeta.setMouseTransparent(true);
@@ -89,7 +98,7 @@ public class ConnectFourMainMenu extends GameApplication {
             textExit.setTranslateY(exitBtn.getY() + exitBtn.getHeight() / 2);
             textExit.setMouseTransparent(true);
 
-            getContentRoot().getChildren().addAll(btn1,btn2,exitBtn,textExit,noAlphaBeta,alphaBeta);
+            getContentRoot().getChildren().addAll(btn1, btn2, exitBtn, textExit, noAlphaBeta, alphaBeta);
 
             getContentRoot().setScaleX(0);
             getContentRoot().setScaleY(0);
