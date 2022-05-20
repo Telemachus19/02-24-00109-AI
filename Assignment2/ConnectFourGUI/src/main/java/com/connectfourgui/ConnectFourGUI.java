@@ -61,7 +61,9 @@ public class ConnectFourGUI extends GameApplication {
      * <code>playerScore</code> Keeps track of the player score <br>
      * <code>aiScore</code> keeps track of the AI score <br>
      */
-    protected int col, row, playerScore = 0, aiScore = 0;
+    protected int col;
+    protected int row;
+    protected static int playerScore = 0, aiScore = 0;
     /**
      * Cell length that is going to be used when the board is going to be divided into cells
      */
@@ -442,8 +444,15 @@ public class ConnectFourGUI extends GameApplication {
         // GameOver(board)
         // Custom Base case
         if (depth == 0 || isTerminalNode) {
-            if (isTerminalNode) return new int[]{-1, 0}; // Game is over and there is no more valid moves
-            else
+            if (isTerminalNode) {
+                if (aiScore > playerScore) {
+                    return new int[]{-1, Integer.MAX_VALUE};
+                } else if (playerScore > aiScore) {
+                    return new int[]{-1, Integer.MIN_VALUE};
+                } else {
+                    return new int[]{-1, 0};
+                }
+            } else
                 return new int[]{-1, scorePosition(board, AI)}; // Game is not over yet and the board has a definite score
         }
         // value or the score of the minimax
@@ -541,8 +550,16 @@ public class ConnectFourGUI extends GameApplication {
 //        }
         // custom base case
         if (depth == 0 || isTerminalNode) {
-            if (isTerminalNode) return new int[]{-1, 0};
-            else return new int[]{-1, scorePosition(board, AI)};
+            if (isTerminalNode) {
+                if (aiScore > playerScore) {
+                    return new int[]{-1, Integer.MAX_VALUE};
+                } else if (playerScore > aiScore) {
+                    return new int[]{-1, Integer.MIN_VALUE};
+                } else {
+                    return new int[]{-1, 0};
+                }
+            } else
+                return new int[]{-1, scorePosition(board, AI)}; // Game is not over yet and the board has a definite score
         }
         // value or the score of the minimax
         int value;
