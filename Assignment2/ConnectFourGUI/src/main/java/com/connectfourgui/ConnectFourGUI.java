@@ -15,8 +15,10 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 
@@ -756,6 +758,10 @@ public class ConnectFourGUI extends GameApplication {
             System.out.println("Player 2 Wins");
             showMessage("Player 2 Wins\n" + "AI Score : " + aiScore + "\nPlayer Score : " + playerScore, () -> getGameController().exit());
         }
+        if (GameOver(terminalBoard) && aiScore == playerScore) {
+            System.out.println("A Tie!!");
+            showMessage("A Tie!!\n" + "AI Score : " + aiScore + "\nPlayer Score : " + playerScore, () -> getGameController().exit());
+        }
     }
 
     /**
@@ -825,7 +831,33 @@ public class ConnectFourGUI extends GameApplication {
      */
     protected void updateScore() {
         aiScore = numberFours(terminalBoard, AI);
+        getWorldProperties().setValue("AI Score", aiScore);
+
         playerScore = numberFours(terminalBoard, PLAYER);
+        getWorldProperties().setValue("Player Score", playerScore);
+    }
+
+    @Override
+    protected void initGameVars(Map<String, Object> vars) {
+        vars.put("AI Score", 0);
+        vars.put("Player Score", 0);
+    }
+
+    @Override
+    protected void initUI() {
+        Text textScore1 = getUIFactoryService().newText("", Color.YELLOW, 22);
+        Text textScore2 = getUIFactoryService().newText("", Color.RED, 22);
+
+        textScore1.setTranslateX(10);
+        textScore1.setTranslateY(50);
+
+        textScore2.setTranslateX(getAppWidth() - 30);
+        textScore2.setTranslateY(50);
+
+        textScore1.textProperty().bind(getWorldProperties().intProperty("AI Score").asString());
+        textScore2.textProperty().bind(getWorldProperties().intProperty("Player Score").asString());
+
+        getGameScene().addUINodes(textScore1, textScore2);
     }
 
     // Initiates the main game loop
