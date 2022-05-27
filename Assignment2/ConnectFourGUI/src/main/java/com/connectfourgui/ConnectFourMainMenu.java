@@ -17,6 +17,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
+import java.util.Arrays;
+
 /**
  * Controls the main menu of the game
  */
@@ -41,35 +43,48 @@ public class ConnectFourMainMenu extends GameApplication {
 
         public MyMainMenu() {
             super(MenuType.MAIN_MENU);
+            String noAlphaBetaMessage = "Mini Max without alpha beta pruning - Depth ";
+            String alphaBetaMessage = "Mini Max with alpha beta pruning - Depth ";
             // Centers the components in the window
             getContentRoot().setTranslateX(FXGL.getAppWidth() / 2.0 - SIZE);
             getContentRoot().setTranslateY(FXGL.getAppHeight() / 2.0 - SIZE);
-            // The first button in the shape of a rectangle and has the text "MiniMax without alpha-beta pruning"
-            var btn1 = new Rectangle(0, 0, SIZE * 2.2, SIZE - 100);
-            btn1.setStrokeWidth(2.5);
-            btn1.strokeProperty().bind(
-                    Bindings.when(btn1.hoverProperty()).then(Color.YELLOW).otherwise(Color.BLACK)
-            );
-            btn1.fillProperty().bind(
-                    Bindings.when(btn1.pressedProperty()).then(Color.YELLOW).otherwise(Color.color(0.1, 0.05, 0.0, 0.75))
-            );
-            // sets the action taken when the button is pressed
-            btn1.setOnMouseClicked(e -> {
-                ConnectFourGUI.alphaBeta = false;
-                fireNewGame();
-            });
-            // The second button in the shape of rectangle and has the text "MiniMax with alpha-beta pruning"
-            var btn2 = new Rectangle(0, btn1.getY() + 50, SIZE * 2, SIZE - 100);
-            btn2.setStrokeWidth(2.5);
-            btn2.strokeProperty().bind(
-                    Bindings.when(btn2.hoverProperty()).then(Color.YELLOW).otherwise(Color.BLACK)
-            );
-            btn2.fillProperty().bind(
-                    Bindings.when(btn2.pressedProperty()).then(Color.YELLOW).otherwise(Color.color(0.1, 0.05, 0.0, 0.75))
-            );
-            btn2.setOnMouseClicked(e -> fireNewGame());
+            Rectangle[] miniMaxBtn = new Rectangle[6];
+            for (int i = 0; i < miniMaxBtn.length; i++) {
+                if (i == 0) {
+                    miniMaxBtn[i] = new Rectangle(0, 0, SIZE * 3, SIZE - 100);
+                } else {
+                    miniMaxBtn[i] = new Rectangle(0, miniMaxBtn[i - 1].getY() + 50, SIZE * 3, SIZE - 100);
+                }
+                miniMaxBtn[i].setStrokeWidth(2.5);
+                miniMaxBtn[i].strokeProperty().bind(
+                        Bindings.when(miniMaxBtn[i].hoverProperty()).then(Color.YELLOW).otherwise(Color.BLACK)
+                );
+                miniMaxBtn[i].fillProperty().bind(
+                        Bindings.when(miniMaxBtn[i].pressedProperty()).then(Color.YELLOW).otherwise(Color.color(0.1, 0.05, 0.0, 0.75))
+                );
+                // sets the action taken when the button is pressed
+                int finalI = i;
+                miniMaxBtn[i].setOnMouseClicked(e -> {
+                    ConnectFourGUI.alphaBeta = finalI > 2;
+                    ConnectFourGUI.depth = 5 + finalI % 3;
+                    fireNewGame();
+                });
+            }
+
+            Text[] btnText = new Text[6];
+            for (int i = 0; i < btnText.length; i++) {
+                if (i < 3) {
+                    btnText[i] = FXGL.getUIFactoryService().newText(noAlphaBetaMessage + (5 + i % 3), Color.WHITE, FontType.GAME, 24.0);
+                } else {
+                    btnText[i] = FXGL.getUIFactoryService().newText(alphaBetaMessage + (5 + i % 3), Color.WHITE, FontType.GAME, 24.0);
+                }
+                btnText[i].setTranslateY(miniMaxBtn[i].getY() + miniMaxBtn[i].getHeight() / 2);
+                btnText[i].setTranslateX(miniMaxBtn[i].getX());
+                btnText[i].setMouseTransparent(true);
+            }
+
             // The exit button in the shape of rectangle
-            var exitBtn = new Rectangle(0, btn2.getY() + 50, SIZE, 50);
+            var exitBtn = new Rectangle(0, miniMaxBtn[5].getY() + 50, SIZE, 50);
             exitBtn.setStrokeWidth(2.5);
             exitBtn.strokeProperty().bind(
                     Bindings.when(exitBtn.hoverProperty()).then(Color.YELLOW).otherwise(Color.BLACK)
@@ -78,27 +93,15 @@ public class ConnectFourMainMenu extends GameApplication {
                     Bindings.when(exitBtn.pressedProperty()).then(Color.YELLOW).otherwise(Color.color(0.1, 0.05, 0.0, 0.75))
             );
             exitBtn.setOnMouseClicked(e -> fireExit());
-            Text textResume = FXGL.getUIFactoryService().newText("RESUME", Color.WHITE, FontType.GAME, 24.0);
-            textResume.setTranslateX(50);
-            textResume.setTranslateY(100);
-            textResume.setMouseTransparent(true);
-
-            Text noAlphaBeta = FXGL.getUIFactoryService().newText("Mini Max without alpha beta pruning", Color.WHITE, FontType.GAME, 24.0);
-            noAlphaBeta.setTranslateY(btn1.getY() + btn1.getHeight() / 2);
-            noAlphaBeta.setTranslateX(btn1.getX());
-            noAlphaBeta.setMouseTransparent(true);
-
-            Text alphaBeta = FXGL.getUIFactoryService().newText("Mini Max with alpha beta pruning", Color.WHITE, FontType.GAME, 24.0);
-            alphaBeta.setTranslateY(btn2.getY() + btn2.getHeight() / 2);
-            alphaBeta.setTranslateX(btn2.getX());
-            alphaBeta.setMouseTransparent(true);
 
             Text textExit = FXGL.getUIFactoryService().newText("EXIT", Color.WHITE, FontType.GAME, 24.0);
             textExit.setTranslateX(exitBtn.getX());
             textExit.setTranslateY(exitBtn.getY() + exitBtn.getHeight() / 2);
             textExit.setMouseTransparent(true);
-
-            getContentRoot().getChildren().addAll(btn1, btn2, exitBtn, textExit, noAlphaBeta, alphaBeta);
+            var children = getContentRoot().getChildren();
+            children.addAll(Arrays.asList(miniMaxBtn));
+            children.addAll(Arrays.asList(btnText));
+            getContentRoot().getChildren().addAll(exitBtn, textExit);
 
             getContentRoot().setScaleX(0);
             getContentRoot().setScaleY(0);
