@@ -1,6 +1,7 @@
 package puzzle8;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -25,19 +26,24 @@ public class Node {
     private Node parent;
     private List<Node> children;
     private int[][] state;
+    private  int[][] goal;
     private String stringState;
     private Action direction;
     private int depth = 0, missingTileRow, missingTileCol, cost, secondaryCost;
+    private final int dimension;
+
 
     // Constructor
-    public Node(int[][] state) {
+    public Node(int[][] state,int[][] goal) {
         this.state = state;
+        this.goal = goal;
+        this.dimension = state.length;
         this.stringState = createStringBoard();
         this.parent = null;
         this.direction = null;
         this.children = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (int i = 0; i < dimension; i++) {
+            for (int j = 0; j < dimension; j++) {
                 if (state[i][j] == 0) {
                     missingTileRow = i;
                     missingTileCol = j;
@@ -48,11 +54,10 @@ public class Node {
     }
 
     // Methods
-    /*بتحول ال matrix ل string عشان المقرنة بعدين*/
     public String createStringBoard() {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++)
+        for (int i = 0; i < dimension; i++) {
+            for (int j = 0; j < dimension; j++)
                 sb.append(this.state[i][j]);
         }
         return sb.toString();
@@ -61,7 +66,6 @@ public class Node {
     /* Add child function which will act as a helper function later
      * sets the parent,depth,cost, and secondary cost of the child then add the child to list of children
      * */
-    /*داله مساعدة عشان لما نيجي تعمل ال child ل ال node*/
     public void addChild(Node child) {
         child.setParent(this);
         child.setDepth(this.depth + 1);
@@ -75,17 +79,14 @@ public class Node {
      * a,b represent new position of missing tile
      * It returns a node which will be used later in expand fn
      * */
-    /*
-     * ال a و ال b مكان الصفرة الجديدة
-     * بترجع node عشان نقدر نستعملها في ال expand */
     public Node createChild(int a, int b) {
-        int[][] placeholder = new int[3][3];
+        int[][] placeholder = new int[dimension][dimension];
         // copying the state matrix into the placeholder and switching the missing tile
-        for (int i = 0; i < 3; i++)
-            System.arraycopy(this.state[i], 0, placeholder[i], 0, 3);
+        for (int i = 0; i < dimension; i++)
+            System.arraycopy(this.state[i], 0, placeholder[i], 0, dimension);
         placeholder[missingTileRow][missingTileCol] = placeholder[a][b];
         placeholder[a][b] = 0;
-        Node child = new Node(placeholder);
+        Node child = new Node(placeholder,this.goal);
         // sets the cost, and secondary cost of the child.
         child.setSecondaryCost(placeholder[missingTileRow][missingTileCol]);
         child.setCost(1);
@@ -93,16 +94,12 @@ public class Node {
         return child;
     }
 
-    /*بترجع لنا مكان قيمة معينه في ال matrix
-     * المكان بيرجع علي هيئة array
-     * 0 -> س
-     * 1 -> ص*/
     /* getRowCol returns a container ,where 0 is the i (row) and 1 is j (col),
      that contains the coordinates of a certain value*/
     public int[] getRowCol(int value) {
         int[] container = new int[2];
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (int i = 0; i < dimension; i++) {
+            for (int j = 0; j < dimension; j++) {
                 if (state[i][j] == value) {
                     container[0] = i;
                     container[1] = j;
@@ -123,12 +120,18 @@ public class Node {
     }
 
     public boolean isGoal() {
-        int[][] goalState = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}};
-        Node GoalState = new Node(goalState);
-        return this.equals(GoalState);
+//        int[][] goalState = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}};
+//        Node GoalState = new Node(goalState);
+//        for(int i = 0; i < dimension;i++){
+//            for(int j = 0; j < dimension;j++){
+//                if(goal[i][j] != state[i][j])
+//                    return false;
+//            }
+//        }
+//        return true;
+        return Arrays.deepEquals(state,goal);
     }
 
-    /*بيحول ال String ل كود عشان لما تنجي نعمل جدول تحتفظة فيه بال node اللي شوفناها قبل كدة*/
     /*Overrides the hashCode function so that it uses the hashCode of String State of the node*/
     @Override
     public int hashCode() {
@@ -213,6 +216,17 @@ public class Node {
         this.missingTileCol = missingTileCol;
     }
 
+    public int getDimension() {
+        return dimension;
+    }
+
+    public int[][] getGoal() {
+        return goal;
+    }
+
+    public void setGoal(int[][] goal) {
+        this.goal = goal;
+    }
 
     public void setSecondaryCost(int secondaryCost) {
         this.secondaryCost = secondaryCost;
@@ -221,8 +235,8 @@ public class Node {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (int i = 0; i < dimension; i++) {
+            for (int j = 0; j < dimension; j++) {
                 sb.append(state[i][j]).append('\t');
             }
             sb.append("\n");

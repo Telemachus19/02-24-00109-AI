@@ -8,8 +8,8 @@ import java.util.*;
 public class Tree {
     Node root;
 
-    public Tree(int[][] initialState) {
-        root = new Node(initialState);
+    public Tree(int[][] initialState,int[][] goalState) {
+        root = new Node(initialState,goalState);
     }
 
     /**
@@ -29,7 +29,7 @@ public class Tree {
             list.add(leftNode);
         }
         // Right Action
-        if (col != 2) {
+        if (col != (node.getDimension() - 1)) {
             Node rightNode = node.createChild(row, col + 1);
             rightNode.setDirection(Action.Right);
             list.add(rightNode);
@@ -41,7 +41,7 @@ public class Tree {
             list.add(upNode);
         }
         // Down Action
-        if (row != 2) {
+        if (row != (node.getDimension() - 1)) {
             Node downNode = node.createChild(row + 1, col);
             downNode.setDirection(Action.Down);
             list.add(downNode);
@@ -155,11 +155,12 @@ public class Tree {
 
     // misplaced tile heuristic function
     private int misplacedTiles(Node n) {
-        int[][] goalState = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}};
+//        int[][] goalState = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}};
+        int[][] goalState = n.getGoal();
         int[][] state = n.getState();
         int h = 0;
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (int i = 0; i < n.getDimension(); i++) {
+            for (int j = 0; j < n.getDimension(); j++) {
                 if (state[i][j] != goalState[i][j]) h++;
             }
         }
@@ -168,10 +169,11 @@ public class Tree {
 
     // manhattan heuristic function
     private int manhattanDistance(Node n) {
-        int[][] goalState = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}};
+//        int[][] goalState = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}};
+        int[][] goalState = n.getGoal();
         int h = 0;
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (int i = 0; i < n.getDimension(); i++) {
+            for (int j = 0; j < n.getDimension(); j++) {
                 int[] container = n.getRowCol(goalState[i][j]);
                 h += Math.abs(i - container[0]) + Math.abs(j - container[1]);
             }
@@ -181,10 +183,11 @@ public class Tree {
 
     // euclidean distance heuristic function
     private int euclideanDistance(Node n) {
-        int[][] goalState = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}};
+//        int[][] goalState = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}};
+        int[][] goalState = n.getGoal();
         int h = 0;
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (int i = 0; i < n.getDimension(); i++) {
+            for (int j = 0; j < n.getDimension(); j++) {
                 int[] container = n.getRowCol(goalState[i][j]);
                 h += Math.sqrt((i - container[0]) * (i - container[0]) + Math.abs(j - container[1]) * Math.abs(j - container[1]));
             }
@@ -389,6 +392,7 @@ public class Tree {
         reached.put(root.hashCode(), root);
         while (!(frontier.isEmpty())) {
             Node node = frontier.poll();
+            System.out.println(node);
             if (node.isGoal()) {
                 double endTime = System.currentTimeMillis();
                 size += 1;

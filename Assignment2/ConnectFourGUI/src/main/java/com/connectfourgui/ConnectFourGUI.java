@@ -90,12 +90,12 @@ public class ConnectFourGUI extends GameApplication {
     /**
      * used to connect the main menu if alphaBeta is true then the minimax algorithm will implement with turning; else without pruning
      */
-    public static boolean alphaBeta = true;
+    public static boolean alphaBeta = false;
     /**
      * Search tree
      */
     public static TreeNode boardTree;
-    protected static int depth = 5;
+    protected static int depth = 6;
     //------------------------------------------------------------------------------------------------------------------
 
     /**
